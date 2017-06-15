@@ -2,7 +2,7 @@
 
 The [Game Creator](https://pixelvision8.itch.io/game-creator) is a full development environment for authoring 8-bit games and is built on top of the open source [Pixel Vision SDK](http://pixelvisionsdk.com) framework. 
 
-![image alt text](Docs/images/GameCreatorGitReadme_image_0.png)
+![image alt text](Docs/images/FullDocumentationReadme_image_0.png)
 
 The Game Creator contains project management, asset creation, and coding/debugging tools. This all in one solution enables complete end to end development allowing anyone to create 8-bit desktop games, share them and even build custom tools.
 
