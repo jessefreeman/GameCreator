@@ -2,7 +2,7 @@
 
 The [Game Creator](https://pixelvision8.itch.io/game-creator) is a full development environment for authoring 8-bit games and is built on top of the open source [Pixel Vision SDK](http://pixelvisionsdk.com) framework. 
 
-![image alt text](images/GameCreatorGitReadme_image_0.png)
+![image alt text](Docs/images/FullDocumentationReadme_image_0.png)
 
 The Game Creator contains project management, asset creation, and coding/debugging tools. This all in one solution enables complete end to end development allowing anyone to create 8-bit desktop games, share them and even build custom tools.
 
@@ -18,7 +18,7 @@ PV8 is also a platform that standardizes 8-bit fantasy console limitations built
 
 Pixel Vision 8 was created by Jesse Freeman ([@jessefreeman](http://twitter.com/jessefreeman)) in collaboration with Pedro Medeiros ([@saint11](http://twitter.com/saint11)) for art and Christer Kaitila ([@McFunkypants](http://twitter.com/McFunkypants)) for music. With additional coding contributions by Shawn Rakowski ([@shwany](http://twitter.com/shwany)).
 
-![image alt text](images/CreditsFooter_image_0.png)
+![image alt text](Docs/images/CreditsFooter_image_0.png)
 
 ## License
 
@@ -26,4 +26,3 @@ Licensed under the [Microsoft Public License (MS-PL) License](https://opensource
 
 Pixel Vision 8 is Copyright (c) 2017 Jesse Freeman. All rights reserved.
 
-
