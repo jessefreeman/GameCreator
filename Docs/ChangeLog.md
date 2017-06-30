@@ -2,9 +2,33 @@
 
 The Game Creator is constantly being updated based on the new feature backlog, bugs that need fixing and optimizing the underlying code base. Because of this, the goal is to release new versions as often as possible. If you are new to the Game Creator or looking to understand what has changed since the last release, you can find all of the changes below, broken down by the version number.
 
-### v0.7.1 Alpha
+### v0.7.2 Alpha
 
 This is an untested build of the Game Creator allowing developers to test out early features going into v0.8.0a. Make sure to back up your workspace before using and you may need to create a new workspace to get access to the new Save and Settings tools, or just manually delete them from your Workspace’s Archive folder.
+
+* Updated doc structure and added new sections on using external editors, the Display Tool, Sprite Tool and taking screenshots.
+
+* Display Tool now shows color totals.
+
+* Display and sprite tool no longer shows magenta around totals.
+
+* Editor window scale value is now saved correctly.
+
+* Foundation for loading Assets from file picker.
+
+* Added support for Flag() API.
+
+* Added support for Asset Projects (.pva).
+
+* Cleaned up export options, src is now set to true by default to include a .pv8 file in the Builds folder.
+
+* Changed options in Open tool. In order to edit a project, click the edit button. Open has been removed and replaced with launch. Also selecting a .pvs or .pva file will give you the option to import it into your open project.
+
+Known issues:
+
+* File Picker Launch button is acting like Edit. Whatever you try to launch will simply be loaded into the Workspace/Game folder. This will be fixed in the next release.
+
+### v0.7.1 Alpha
 
 * New save tool which allows you to preview a game’s files, archive the project and export it.
 

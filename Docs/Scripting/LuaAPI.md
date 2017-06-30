@@ -1,48 +1,14 @@
-# Lua API
+# Complete Lua API
 
-All Lua games have access to a set of APIs that communicate directly with the Pixel Vision 8 engine. These are exposed via the Game Chip. This bridge allows you to access the native properties and methods of the core framework. While the engine itself contains lots of separate system working together, only a small subset of these are exposed to the Lua API. Additional APIs can be accessed through other bridges which are automatically loaded by each chip. 
+This is a complete list of Pixel Vision 8’s Lua APIs. Some of these methods may contain optional arguments allowing you to provide only the values you need. Be sure to read the description to understand how each method is used. While the engine itself contains lots of separate system working together, only a small subset of these are exposed to the Lua API. Additional APIs can be accessed through other bridges which are automatically loaded by each chip.
 
-## Game Lifecycle
+## BackgroundColor ( id )
 
-The game has several built-in methods you can implement to hook into the engine as it runs. These are the main methods:
-
-<table>
-  <tr>
-    <td>Name</td>
-    <td>Description</td>
-  </tr>
-  <tr>
-    <td>Init()</td>
-    <td>This is called when a game is initialized. It is only called once when the game is first loaded.</td>
-  </tr>
-  <tr>
-    <td>Update()</td>
-    <td>This is called when the game is updated before the draw call. Use this method for non-visual updates, such as calculations, input detection, etc.
-</td>
-  </tr>
-  <tr>
-    <td>Draw()</td>
-    <td>This is used for render logic. Place draw calls in this method.</td>
-  </tr>
-  <tr>
-    <td>Reset()
-</td>
-    <td>This is called when a game is reset.</td>
-  </tr>
-</table>
-
-
-Be sure to check out the source code for each of the demo games to see how all of this works.
-
-## Methods
-
-### BackgroundColor ( id )
-
-#### Summary
+### Summary
 
 The background color is used to fill the screen when clearing the display. You can use this method to read or update the background color at any point during the GameChip's draw phase. When calling BackgroundColor(), without an argument, it returns the current background color int. You can pass in an optional int to update the background color by calling BackgroundColor(0) where 0 is any valid ID in the ColorChip. Passing in a value such as -1, or one that is out of range, defaults the background color to magenta (#ff00ff) which is the engine's default transparent color.
 
-#### Arguments
+### Arguments
 
 <table>
   <tr>
@@ -58,20 +24,20 @@ The background color is used to fill the screen when clearing the display. You c
 </table>
 
 
-#### Returns
+### Returns
 
 This method returns the current background color ID. If no color exists, it returns -1 which is magenta (#FF00FF).
 
 * * *
 
 
-### Button ( button, state, controllerID )
+## Button ( button, state, controllerID )
 
-#### Summary
+### Summary
 
 The main form of input for Pixel Vision 8 is the controller's buttons. You can get the current state of any button by calling the Button() method and supplying a button ID, an InputState enum, and the controller ID. When called, the Button() method returns a bool for the requested button and its state. The InputState enum contains options for testing the Down and Released states of the supplied button ID. By default, Down is automatically used which returns true when the key was pressed in the current frame. When using Released, the method returns true if the key is currently up but was down in the last frame.
 
-#### Arguments
+### Arguments
 
 <table>
   <tr>
@@ -97,20 +63,20 @@ The main form of input for Pixel Vision 8 is the controller's buttons. You can g
 </table>
 
 
-#### Returns
+### Returns
 
 Returns a bool based on the state of the button.
 
 * * *
 
 
-### CalculateIndex ( x, y, width )
+## CalculateIndex ( x, y, width )
 
-#### Summary
+### Summary
 
 Converts an X and Y position into an index. This is useful for finding positions in 1D arrays that represent 2D data.
 
-#### Arguments
+### Arguments
 
 <table>
   <tr>
@@ -136,20 +102,20 @@ Converts an X and Y position into an index. This is useful for finding positions
 </table>
 
 
-#### Returns
+### Returns
 
 Returns an int value representing the X and Y position in a 1D array.
 
 * * *
 
 
-### CalculatePosition ( index, width )
+## CalculatePosition ( index, width )
 
-#### Summary
+### Summary
 
 Converts an index into an X and Y position to help when working with 1D arrays that represent 2D data.
 
-#### Arguments
+### Arguments
 
 <table>
   <tr>
@@ -170,20 +136,20 @@ Converts an index into an X and Y position to help when working with 1D arrays t
 </table>
 
 
-#### Returns
+### Returns
 
 Returns a vector representing the X and Y position of an index in a 1D array.
 
 * * *
 
 
-### Clamp ( val, min, max )
+## Clamp ( val, min, max )
 
-#### Summary
+### Summary
 
 Limits a value between a minimum and maximum.
 
-#### Arguments
+### Arguments
 
 <table>
   <tr>
@@ -209,20 +175,20 @@ Limits a value between a minimum and maximum.
 </table>
 
 
-#### Returns
+### Returns
 
 Returns an int within the min and max range.
 
 * * *
 
 
-### Clear ( x, y, width, height )
+## Clear ( x, y, width, height )
 
-#### Summary
+### Summary
 
 Clearing the display removed all of the existing pixel data, replacing it with the default background color. The Clear() method allows you specify what region of the display to clear. By simply calling Clear(), with no arguments, it automatically clears the entire display. You can manually define an area of the screen to clear by supplying option x, y, width and height arguments. When clearing a specific area of the display, anything outside of the defined boundaries remains on the next draw phase. This is useful for drawing a HUD but clearing the display below for a scrolling map and sprites. Clear can only be used once during the draw phase.
 
-#### Arguments
+### Arguments
 
 <table>
   <tr>
@@ -256,13 +222,13 @@ Clearing the display removed all of the existing pixel data, replacing it with t
 * * *
 
 
-### Color ( id, value )
+## Color ( id, value )
 
-#### Summary
+### Summary
 
 The Color() method allows you to read and update color values in the ColorChip. This method has two modes which require a color ID to work. By calling the method with just an ID, like Color(0), it returns a hex string for the given color at the supplied color ID. By passing in a new hex string, like Color(0, "#FFFF00"), you can change the color with the given ID. While you can use this method to modify color values directly, you should avoid doing this at run time since the DisplayChip must parse and cache the new hex value. If you just want to change a color to an existing value, use the ReplaceColor() method.
 
-#### Arguments
+### Arguments
 
 <table>
   <tr>
@@ -283,29 +249,29 @@ The Color() method allows you to read and update color values in the ColorChip. 
 </table>
 
 
-#### Returns
+### Returns
 
 This method returns a hex string for the supplied color ID. If the color has not been set or is out of range, it returns magenta (#FF00FF) which is the default transparent system color.
 
 * * *
 
 
-### ColorsPerSprite ( )
+## ColorsPerSprite ( )
 
-#### Summary
+### Summary
 
 Pixel Vision 8 sprites have limits around how many colors they can display at once which is called the Colors Per Sprite or CPS. The ColorsPerSprite() method returns this value from the SpriteChip. While this is read-only at run-time, it has other important uses. If you set up your ColorChip in palettes, grouping sets of colors together based on the SpriteChip's CPS value, you can use this to shift a sprite's color offset up or down by a fixed amount when drawing it to the display. Since this value does not change when a game is running, it is best to get a reference to it when the game starts up and store it in a local variable.
 
 * * *
 
 
-### DisplaySize ( width, height )
+## DisplaySize ( width, height )
 
-#### Summary
+### Summary
 
 The display's size defines the visible area where pixel data exists on the screen. Calculating this is important for knowing how to position sprites on the screen. The DisplaySize() method allows you to get the resolution of the display at run time. While you can also define a new resolution by providing a width and height value, this may not work correctly at runtime and is currently experimental. You should instead set the resolution before loading the game. If you are using overscan, you must subtract it from the width and height of the returned vector to find the "visible pixel" dimensions.
 
-#### Arguments
+### Arguments
 
 <table>
   <tr>
@@ -326,20 +292,20 @@ The display's size defines the visible area where pixel data exists on the scree
 </table>
 
 
-#### Returns
+### Returns
 
 This method returns a Vector representing the display's size. The X and Y values refer to the pixel width and height of the screen.
 
 * * *
 
 
-### DrawPixels ( pixelData, x, y, width, height, drawMode, flipHflipV, colorOffset )
+## DrawPixels ( pixelData, x, y, width, height, drawMode, flipHflipV, colorOffset )
 
-#### Summary
+### Summary
 
 This method allows you to draw raw pixel data directly to the display. Depending on which draw mode you use, the pixel data could be rendered as a sprite or drawn directly onto the tilemap cache. Sprites drawn with this method still count against the total number the display can render but you can draw irregularly shaped sprites by defining a custom width and height. For drawnig into the tilemap cache directly, you can use this to change the way the tilemap looks at run-time without having to modify a sprite's pixel data. It is important to note that when you change a tile's sprite ID or color offset, the tilemap redraws it back to the cache overwriting any pixel data that was previously there.
 
-#### Arguments
+### Arguments
 
 <table>
   <tr>
@@ -398,13 +364,13 @@ This method allows you to draw raw pixel data directly to the display. Depending
 * * *
 
 
-### DrawSprite ( id, x, y, flipH, flipV, aboveBG, colorOffset )
+## DrawSprite ( id, x, y, flipH, flipV, aboveBG, colorOffset )
 
-#### Summary
+### Summary
 
 Sprites represent individual collections of pixel data at a fixed size. By default, Pixel Vision 8 sprites are 8 x 8 pixels and have a set limit of visible colors. You can use the DrawSprite() method to render any sprite stored in the Sprite Chip. The display also has a limitation on how many sprites can be on the screen at one time. Each time you call DrawSprite(), the sprite counts against the total amount the display can render. If you attempt to draw more sprites than the display can handle, the call is ignored. One thing to keep in mind when drawing sprites is that their x and y position wraps if they reach the right or bottom border of the screen. You need to change the overscan border to hide sprites offscreen.
 
-#### Arguments
+### Arguments
 
 <table>
   <tr>
@@ -453,13 +419,13 @@ Sprites represent individual collections of pixel data at a fixed size. By defau
 * * *
 
 
-### DrawSprites ( ids, x, y, width, flipH, flipV, aboveBG, colorOffset, onScreen )
+## DrawSprites ( ids, x, y, width, flipH, flipV, aboveBG, colorOffset, onScreen )
 
-#### Summary
+### Summary
 
 The DrawSprites method makes it easier to combine and draw groups of sprites to the display in a grid. This is useful when trying to render 4 sprites together as a larger 16x16 pixel graphic. While there is no limit on the size of the sprite group which can be rendered, it is important to note that each sprite in the array still counts as an individual sprite. Sprites passed into the DrawSprites() method are visible if the display can render it. Under the hood, this method uses DrawSprite but solely manages positioning the sprites out in a grid. Another unique feature of his helper method is that it automatically hides sprites that go offscreen. When used with overscan border, it greatly simplifies drawing larger sprites to the display.
 
-#### Arguments
+### Arguments
 
 <table>
   <tr>
@@ -518,13 +484,13 @@ The DrawSprites method makes it easier to combine and draw groups of sprites to 
 * * *
 
 
-### DrawText ( text, x, y, drawMode, font, colorOffset, spacing, width )
+## DrawText ( text, x, y, drawMode, font, colorOffset, spacing, width )
 
-#### Summary
+### Summary
 
 The DrawText() method allows you to render text to the display. By supplying a custom DrawMode, you can render characters as individual sprites (DrawMode.Sprite), tiles (DrawMode.Tile) or drawn directly into the tilemap cache (DrawMode.TilemapCache). When drawing text as sprites, you have more flexibility over position, but each character counts against the displays' maximum sprite count. When rendering text to the tilemap, more characters are shown and also increase performance when rendering large amounts of text. You can also define the color offset, letter spacing which only works for sprite and tilemap cache rendering, and a width in characters if you want the text to wrap.
 
-#### Arguments
+### Arguments
 
 <table>
   <tr>
@@ -578,13 +544,13 @@ The DrawText() method allows you to render text to the display. By supplying a c
 * * *
 
 
-### DrawTilemap ( x, y, columns, rows )
+## DrawTilemap ( x, y, columns, rows )
 
-#### Summary
+### Summary
 
 By default, the tilemap renders to the display by simply calling DrawTilemap(). This automatically fills the entire display with the visible portion of the tilemap. To have more granular control over how to render the tilemap, you can supply an optional X and Y position to change where it draws on the screen. You can also modify the width (columns) and height (rows) that are displayed too. This is useful if you want to show a HUD or some other kind of image on the screen that is not overridden by the tilemap. To scroll the tilemap, you need to call the ScrollPosition() and supply a new scroll X and Y value.
 
-#### Arguments
+### Arguments
 
 <table>
   <tr>
@@ -618,13 +584,13 @@ By default, the tilemap renders to the display by simply calling DrawTilemap(). 
 * * *
 
 
-### Flag ( column, row, value )
+## Flag ( column, row, value )
 
-#### Summary
+### Summary
 
 This allows you to quickly access just the flag value of a tile. This is useful when trying to the caluclate collision on the tilemap. By default, you can call this method and return the flag value. If you supply a new value, it will be overridden on the tile. Changing a tile's flag value does not force the tile to be redrawn to the tilemap cache.
 
-#### Arguments
+### Arguments
 
 <table>
   <tr>
@@ -653,22 +619,22 @@ This allows you to quickly access just the flag value of a tile. This is useful 
 * * *
 
 
-### InputString ( )
+## InputString ( )
 
-#### Summary
+### Summary
 
 The InputString() method returns the keyboard input entered this frame. This method is useful for capturing keyboard text input.
 
 * * *
 
 
-### Key ( key, state )
+## Key ( key, state )
 
-#### Summary
+### Summary
 
 While the main form of input in Pixel Vision 8 comes from the controllers, you can test for keyboard input by calling the Key() method. When called, this method returns the current state of a key. The method accepts the Keys enum, or an int, for a specific key. In additon, you need to provide the input state to check for. The InputState enum has two states, Down and Released. By default, Down is automatically used which returns true when the key is being pressed in the current frame. When using Released, the method returns true if the key is currently up but was down in the last frame.
 
-#### Arguments
+### Arguments
 
 <table>
   <tr>
@@ -689,20 +655,20 @@ While the main form of input in Pixel Vision 8 comes from the controllers, you c
 </table>
 
 
-#### Returns
+### Returns
 
 This method returns a bool based on the state of the button.
 
 * * *
 
 
-### MouseButton ( button, state )
+## MouseButton ( button, state )
 
-#### Summary
+### Summary
 
 Pixel Vision 8 supports mouse input. You can get the current state of the mouse's left (0) and right (1) buttons by calling MouseButton(). In addition to supplying a button ID, you also need to provide the InputState enum. The InputState enum contains options for testing the Down and Released states of the supplied button ID. By default, Down is automatically used which returns true when the key was pressed in the current frame. When using Released, the method returns true if the key is currently up but was down in the last frame.
 
-#### Arguments
+### Arguments
 
 <table>
   <tr>
@@ -723,29 +689,29 @@ Pixel Vision 8 supports mouse input. You can get the current state of the mouse'
 </table>
 
 
-#### Returns
+### Returns
 
 Returns a bool based on the state of the button.
 
 * * *
 
 
-### MousePosition ( )
+## MousePosition ( )
 
-#### Summary
+### Summary
 
 The MousePosition() method returns a vector for the current cursor's X and Y position. This value is read-only. The mouse's 0,0 position is in the upper left-hand corner of the display
 
 * * *
 
 
-### OverscanBorder ( x, y )
+## OverscanBorder ( x, y )
 
-#### Summary
+### Summary
 
 Pixel Vision 8's overscan value allows you to define parts of the screen that are not visible similar to how older CRT TVs rendered images. This overscan border allows you to hide sprites off the screen so they do not wrap around the edges. You can call OverscanBorder() without any arguments to return a vector for the right and bottom border value. This value represents a full column and row that the renderer crops from the tilemap. To get the actual pixel value of the right and bottom border, multiply this value by the sprite's size. It is also important to note that Pixel Vision 8 automatically crops the display to reflect the overscan. So a resolution of 256x244, with an overscan x and y value of 1, actually displays 248x236 pixels. While you can change the OverscanBorder at run-time by calling OverscanBorder() and supplying a new X and Y value, this should not be done while a game is running.
 
-#### Arguments
+### Arguments
 
 <table>
   <tr>
@@ -766,29 +732,29 @@ Pixel Vision 8's overscan value allows you to define parts of the screen that ar
 </table>
 
 
-#### Returns
+### Returns
 
 This method returns the overscan's X (right) and Y (bottom) border value as a vector. Each X and Y value needs to be multiplied by 8 to get the actual pixel size of the overscan border. Use this value to calculate the actual visible screen area which may be different than the display's native resolution. Also useful to position sprites offscreen when not needed, so they do not wrap around the screen.
 
 * * *
 
 
-### PauseSong ( )
+## PauseSong ( )
 
-#### Summary
+### Summary
 
 Toggles the current playback state of the sequencer. If the song is playing it will pause, if it is paused it will play.
 
 * * *
 
 
-### PlaySong ( trackIDs, loop )
+## PlaySong ( trackIDs, loop )
 
-#### Summary
+### Summary
 
 This helper method allows you to automatically load a set of loops as a complete song and plays them back. You can also define if the tracks should loop when they are done playing.
 
-#### Arguments
+### Arguments
 
 <table>
   <tr>
@@ -812,13 +778,13 @@ This helper method allows you to automatically load a set of loops as a complete
 * * *
 
 
-### PlaySound ( id, channel )
+## PlaySound ( id, channel )
 
-#### Summary
+### Summary
 
 This method plays back a sound on a specific channel. The SoundChip has a limit of active channels so playing a sound effect while another was is playing on the same channel will cancel it out and replace with the new sound.
 
-#### Arguments
+### Arguments
 
 <table>
   <tr>
@@ -842,13 +808,13 @@ This method plays back a sound on a specific channel. The SoundChip has a limit 
 * * *
 
 
-### ReadSaveData ( key, defaultValue )
+## ReadSaveData ( key, defaultValue )
 
-#### Summary
+### Summary
 
 Allows you to read saved data by supplying a key. If no matching key exists, "undefined" is returned.
 
-#### Arguments
+### Arguments
 
 <table>
   <tr>
@@ -869,38 +835,38 @@ Allows you to read saved data by supplying a key. If no matching key exists, "un
 </table>
 
 
-#### Returns
+### Returns
 
 Returns string data associated with the supplied key.
 
 * * *
 
 
-### RebuildTilemap ( )
+## RebuildTilemap ( )
 
-#### Summary
+### Summary
 
 This forces the map to redraw its cached pixel data. Use this to clear any pixel data added after the map created the pixel data cache.
 
 * * *
 
 
-### RedrawDisplay ( )
+## RedrawDisplay ( )
 
-#### Summary
+### Summary
 
 You can use RedrawDisplay to make clearing and drawing the tilemap easier. This is a helper method automatically calls both Clear() and DrawTilemap() for you.
 
 * * *
 
 
-### Repeat ( val, max )
+## Repeat ( val, max )
 
-#### Summary
+### Summary
 
 Repeats a value based on the max. When the value is greater than the max, it starts over at 0 plus the remaining value.
 
-#### Arguments
+### Arguments
 
 <table>
   <tr>
@@ -921,20 +887,20 @@ Repeats a value based on the max. When the value is greater than the max, it sta
 </table>
 
 
-#### Returns
+### Returns
 
 Returns an int that is never less than 0 or greater than the max.
 
 * * *
 
 
-### ReplaceColor ( index, id )
+## ReplaceColor ( index, id )
 
-#### Summary
+### Summary
 
 The ReplaceColor() method allows you to quickly change a color to an existing color without triggering the DisplayChip to parse and cache a new hex value. Consider this an alternative to the Color() method. It is useful for simulating palette swapping animation on sprites pointed to a fixed group of color IDs. Simply cal the ReplaceColor() method and supply a target color ID position, then the new color ID it should point to. Since you are only changing the color's ID pointer, there is little to no performance penalty during the GameChip's draw phase.
 
-#### Arguments
+### Arguments
 
 <table>
   <tr>
@@ -958,13 +924,13 @@ The ReplaceColor() method allows you to quickly change a color to an existing co
 * * *
 
 
-### RewindSong ( position, loopID )
+## RewindSong ( position, loopID )
 
-#### Summary
+### Summary
 
 Rewinds the sequencer to the beginning of the currently loaded song. You can define the position in the loop and the loop where playback should begin. Calling this method without any arguments will simply rewind the song to the beginning of the first loop.
 
-#### Arguments
+### Arguments
 
 <table>
   <tr>
@@ -988,13 +954,13 @@ Rewinds the sequencer to the beginning of the currently loaded song. You can def
 * * *
 
 
-### ScrollPosition ( x, y )
+## ScrollPosition ( x, y )
 
-#### Summary
+### Summary
 
 You can scroll the tilemap by calling the ScrollPosition() method and supplying a new scroll X and Y position. By default, calling ScrollPosition() with no arguments returns a vector with the current scroll X and Y values. If you supply an X and Y value, it updates the tilemap's scroll position the next time you call the DrawTilemap() method.
 
-#### Arguments
+### Arguments
 
 <table>
   <tr>
@@ -1015,20 +981,20 @@ You can scroll the tilemap by calling the ScrollPosition() method and supplying 
 </table>
 
 
-#### Returns
+### Returns
 
 By default, this method returns a vector with the current scroll X and Y position.
 
 * * *
 
 
-### Sprite ( id, data )
+## Sprite ( id, data )
 
-#### Summary
+### Summary
 
 This allows you to return the pixel data of a sprite or overwrite it with new data. Sprite pixel data is an array of color reference ids. When calling the method with only an id argument, you will get the sprite's pixel data. If you supply data, it will overwrite the sprite. It is important to make sure that any new pixel data should be the same length of the existing sprite's pixel data. This can be calculated by multiplying the sprite's width and height. You can add the transparent area to a sprite's data by using -1.
 
-#### Arguments
+### Arguments
 
 <table>
   <tr>
@@ -1049,20 +1015,20 @@ This allows you to return the pixel data of a sprite or overwrite it with new da
 </table>
 
 
-#### Returns
+### Returns
 
 Returns an array of int data which points to color ids.
 
 * * *
 
 
-### SpriteSize ( width, height )
+## SpriteSize ( width, height )
 
-#### Summary
+### Summary
 
 Returns the size of the sprite as a Vector where X and Y represent the width and height.
 
-#### Arguments
+### Arguments
 
 <table>
   <tr>
@@ -1083,29 +1049,29 @@ Returns the size of the sprite as a Vector where X and Y represent the width and
 </table>
 
 
-#### Returns
+### Returns
 
 Returns a vector where the X and Y for the sprite's width and height.
 
 * * *
 
 
-### StopSong ( )
+## StopSong ( )
 
-#### Summary
+### Summary
 
 Stops the sequencer.
 
 * * *
 
 
-### Tile ( column, row, spriteID, colorOffset, flag )
+## Tile ( column, row, spriteID, colorOffset, flag )
 
-#### Summary
+### Summary
 
 This allows you to get the current sprite id, color offset and flag values associated with a given tile. You can optionally supply your own if you want to change the tile's values. Changing a tile's sprite id or color offset will for the tilemap to redraw it to the cache on the next frame. If you are drawing raw pixel data into the tilemap cache in the same position, it will be overwritten with the new tile's pixel data.
 
-#### Arguments
+### Arguments
 
 <table>
   <tr>
@@ -1141,20 +1107,20 @@ This allows you to get the current sprite id, color offset and flag values assoc
 </table>
 
 
-#### Returns
+### Returns
 
 Returns a dictionary containing the spriteID, colorOffset, and flag for an individual tile.
 
 * * *
 
 
-### TilemapSize ( width, height )
+## TilemapSize ( width, height )
 
-#### Summary
+### Summary
 
 This will return a vector representing the size of the tilemap in columns (x) and rows (y). To find the size in pixels, you will need to multiply the returned vectors x and y values by the sprite size's x and y. This method also allows you to resize the tilemap by passing in an optional new width and height. Resizing the tile map is destructive, so any changes will automatically clear the tilemap's sprite ids, color offsets, and flag values.
 
-#### Arguments
+### Arguments
 
 <table>
   <tr>
@@ -1175,20 +1141,20 @@ This will return a vector representing the size of the tilemap in columns (x) an
 </table>
 
 
-#### Returns
+### Returns
 
 Returns a vector of the tile maps size in tiles where x and y are the columns and rows of the tilemap.
 
 * * *
 
 
-### TotalColors ( ignoreEmpty )
+## TotalColors ( ignoreEmpty )
 
-#### Summary
+### Summary
 
 The TotalColors() method simply returns the total number of colors in the ColorChip. By default, it returns only colors that have been set to value other than magenta (#FF00FF) which is the default transparent value used by the engine. By calling TotalColors(false), it returns the total available color slots in the ColorChip.
 
-#### Arguments
+### Arguments
 
 <table>
   <tr>
@@ -1204,20 +1170,20 @@ The TotalColors() method simply returns the total number of colors in the ColorC
 </table>
 
 
-#### Returns
+### Returns
 
 This method returns the total number of colors in the color chip based on the ignoreEmpty argument's value.
 
 * * *
 
 
-### TotalSprites ( ignoreEmpty )
+## TotalSprites ( ignoreEmpty )
 
-#### Summary
+### Summary
 
 Returns the total number of sprites in the system. You can pass in an optional argument to get a total number of sprites the Sprite Chip can store by passing in false for ignoreEmpty. By default, only sprites with pixel data will be included in the total return.
 
-#### Arguments
+### Arguments
 
 <table>
   <tr>
@@ -1233,20 +1199,20 @@ Returns the total number of sprites in the system. You can pass in an optional a
 </table>
 
 
-#### Returns
+### Returns
 
 This method returns the total number of sprites in the color chip based on the ignoreEmpty argument's value.
 
 * * *
 
 
-### UpdateTiles ( column, row, columns, ids, colorOffset, flag )
+## UpdateTiles ( column, row, columns, ids, colorOffset, flag )
 
-#### Summary
+### Summary
 
 A helper method which allows you to update several tiles at once. Simply define the start column and row position, the width of the area to update in tiles and supply a new int array of sprite IDs. You can also modify the color offset and flag value of the tiles via the optional parameters. This helper method uses calls the Tile() method to update each tile, so any changes to a tile will be automatically redrawn to the tilemap's cache.
 
-#### Arguments
+### Arguments
 
 <table>
   <tr>
@@ -1290,13 +1256,13 @@ A helper method which allows you to update several tiles at once. Simply define 
 * * *
 
 
-### WriteSaveData ( key, value )
+## WriteSaveData ( key, value )
 
-#### Summary
+### Summary
 
 Allows you to save string data to the game file itself. This data persistent even after restarting a game.
 
-#### Arguments
+### Arguments
 
 <table>
   <tr>

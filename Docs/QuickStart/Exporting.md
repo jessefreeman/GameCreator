@@ -1,4 +1,4 @@
-Exporting Games
+# Exporting Games
 
 While archiving your game is a good way to save it before loading a new project to work on, sometimes you will want to share your creation with others outside of the Game Creator. The Save Tool offers an option to export your game without the need to recompile it. To do this, the Game Creator’s save tool uses Pixel Vision 8 Runner Templates for different platforms and creates a new executable for you. Let’s take a look at how this works.
 

@@ -1,4 +1,4 @@
-Fullscreen and Windowed Mode
+# Fullscreen and Windowed Mode
 
 You can chose to run the Game Creator in fullscreen or windowed mode. By default, the Game Creator should boot up in windowed mode the first time you use it.
 

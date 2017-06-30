@@ -1,4 +1,4 @@
-## Tilemap Flags
+# Tilemap Flags
 
 The `tilemap-flags.png` represents tile collision data. Each tile can be assigned a specific color, and that color corresponds to an ID number flag. The PNG is read in 8x8 pixel chunks, but the first pixel color is used and the others are ignored. When a flag color is detected, the flag’s value is set. Here are the supported flag colors and their corresponding values:
 

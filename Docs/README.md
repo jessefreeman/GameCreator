@@ -10,6 +10,6 @@ It contains project management, asset creation, and coding/debugging tools. This
 
 This documentation is designed to cover how to work with the Game Creator. It explores everything you need to know about installing the Game Creator, making games and how the tools work. You should check out the quick start guide before reading more of the in-depth material covered in this documentation. Once you have read this documentation, you will be ready to not only make Pixel Vision 8 games but also understand how to optimize them and extend the editor by with custom built tools.
 
-**Latest version** - v0.7.0 available at [http://pixelvision8.com](http://pixelvision8.com)
+**Latest version** - v0.7.2 available at [http://pixelvision8.com](http://pixelvision8.com)
 
 
