@@ -14,5 +14,3 @@ _book/*
 *.epub
 *.mobi
 *.pdf
-*.meta
-*.DS_Store
