@@ -34,13 +34,13 @@ function EditorUI:CreatePicker(flag, rect, itemWidth, itemHeight, total, spriteN
   local selectedSpriteData = _G[spriteName .. "selected"]
 
   if(selectedSpriteData ~= nil) then
-    data.selectedDrawArgs = {selectedSpriteData.spriteIDs, tmpX, tmpY, selectedSpriteData.width}
+    data.selectedDrawArgs = {selectedSpriteData.spriteIDs, 0, 0, selectedSpriteData.width}
   end
 
   selectedSpriteData = _G[spriteName .. "over"]
 
   if(selectedSpriteData ~= nil) then
-    data.overDrawArgs = {selectedSpriteData.spriteIDs, tmpX, tmpY, selectedSpriteData.width}
+    data.overDrawArgs = {selectedSpriteData.spriteIDs, 0, 0, selectedSpriteData.width}
   end
 
   self:SetUIFlags(data.tiles.c, data.tiles.r, data.tiles.w, data.tiles.h, data.flagID)

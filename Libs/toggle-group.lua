@@ -32,8 +32,12 @@ end
 
 function EditorUI:ToggleButton(data, value, callAction)
 
+  if(value == nil) then
+    value = not data.selected
+  end
+
   -- invert the selected value
-  data.selected = value and value or not data.selected
+  data.selected = value
 
   -- force the button to redraw itself
   data.invalid = true
@@ -175,12 +179,10 @@ end
 -- end
 
 function EditorUI:SelectToggleButton(data, id, trigger)
-
   -- TODO need to make sure we handle multiple selections vs one at a time
 
   -- Get the new button to select
   local buttonData = data.buttons[id]
-
   --print("Select", id, #data.buttons)
 
   -- Make sure there is button data and the button is not disabled
@@ -192,6 +194,8 @@ function EditorUI:SelectToggleButton(data, id, trigger)
   if(id == buttonData.selected) then
     return
   end
+
+
 
   if(data.singleSelection == true) then
     -- Make sure that the button is selected before we disable it
@@ -236,8 +240,10 @@ function EditorUI:ToggleGroupCurrentSelection(data)
   return data.buttons[data.currentSelection]
 end
 
+-- TODO is anything using this?
 function EditorUI:ToggleGroupSelections(data)
   local selections = {}
+  print("Toggle Data", data.name)
   local total = #data.buttons
   local buttonData = nil
   for i = 1, total do

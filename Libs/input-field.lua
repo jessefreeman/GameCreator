@@ -34,6 +34,8 @@ function EditorUI:CreateInputField(flag, rect, text, toolTip, pattern, font, for
 
   data.nextField = nil
   data.previousField = nil
+  data.clearValue = ""
+  data.clearOnEnter = false
 
   -- override key callbacks for input fields
 
@@ -240,6 +242,10 @@ function EditorUI:EditInputField(data, value)
     -- Save a copy of the current line of text
     data.defaultValue = data.lines[1]
 
+    if(data.clearOnEnter == true) then
+      data.defaultValue = data.clearValue
+    end
+
     -- Clear the current text from the field
     data.lines[1] = ""
 
@@ -274,7 +280,7 @@ function EditorUI:ChangeInputField(data, text, trigger)
     end
 
     -- update the text var with the new value
-    text = string.rpad(tostring(value), data.width, "0")
+    text = string.rpad(tostring(value), data.width, value > 0 and "0" or " ")
   end
 
   -- Look for any custom validation
@@ -282,10 +288,15 @@ function EditorUI:ChangeInputField(data, text, trigger)
     text = data.onValidate(text)
   end
 
+  if(trigger ~= false)then
+    trigger = data.text ~= text
+  end
+
   -- Make the text contents of the input field easy to access since there is only one line of it
   data.text = text
 
   -- Route the modified text to ChangeInputArea()
   self:ChangeInputArea(data, text, trigger)
+
 
 end

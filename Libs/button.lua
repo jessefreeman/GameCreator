@@ -19,6 +19,10 @@ function EditorUI:CreateButton(flag, rect, spriteName, toolTip, forceDraw)
   -- Create the button's default data
   local data = self:CreateData(flag, rect, spriteName, toolTip, forceDraw)
 
+  data.doubleClick = false
+  data.doubleClickTime = 0
+  data.doubleClickDelay = .35
+
   -- Customize the default name by adding Button to it
   data.name = "Button" .. data.name
   data.onClick = function(tmpData)
@@ -68,6 +72,8 @@ function EditorUI:UpdateButton(data, hitRect)
     return
   end
 
+
+
   -- If the button has data but it's not enabled exit out of the update
   if(data.enabled == false) then
 
@@ -104,6 +110,18 @@ function EditorUI:UpdateButton(data, hitRect)
     -- Ready to test finer collision if needed
     if(self.collisionManager:MouseInRect(hitRect) == true or overrideFocus) then
 
+      if(data.doubleClick == true) then
+
+
+        -- If the button wasn't in focus before, reset the timer since it's about to get focus
+        if(data.inFocus == false) then
+          data.doubleClickTime = 0
+        end
+
+        data.doubleClickTime = data.doubleClickTime + self.timeDelta
+
+      end
+
       -- If we are in the collision area, set the focus
       self:SetFocus(data)
 
@@ -134,8 +152,12 @@ function EditorUI:UpdateButton(data, hitRect)
 
       end
 
+
+
       -- Check to see if the button is pressed and has an onAction callback
       if(self.collisionManager.active == data.flagID) then
+
+        -- TODO need to make sure the click time is less than the delay and reset it
 
         -- Test to see if this button is a toggle button if it has a selected value
         -- if(data.selected ~= nil) then
@@ -143,11 +165,16 @@ function EditorUI:UpdateButton(data, hitRect)
         --   -- Toggle the button
         --   self:ToggleButton(data)
         --
-        -- else
-        data.onClick(data)
-        -- Click the button
-        -- self:ClickButton(data)
 
+        -- else
+        -- data.onClick(data)
+
+        -- Reset double click
+
+        -- Click the button
+        self:ClickButton(data, true, data.doubleClickTime < data.doubleClickDelay)
+
+        data.doubleClickTime = 0
         -- end
 
       end
@@ -208,7 +235,7 @@ function EditorUI:RedrawButton(data)
       data.tileDrawArgs[4] = data.cachedSpriteData[state].spriteIDs
 
       -- Color offset
-      -- data.tileDrawArgs[5] = spriteData.colorOffset or 0
+      data.tileDrawArgs[5] = data.cachedSpriteData[state].colorOffset or 0
 
       -- Create a new draw call
       self:NewDraw("UpdateTiles", data.tileDrawArgs)
@@ -249,12 +276,18 @@ function EditorUI:ClearButton(data, flag)
 end
 
 -- Use this to perform a click action on a button. It's used internally when a mouse click is detected.
-function EditorUI:ClickButton(data, callAction)
+function EditorUI:ClickButton(data, callAction, doubleClick)
 
   if(data.onAction ~= nil and callAction ~= false) then
-    -- Call the button data's onAction method with no values
-    data.onAction()
+
+    -- Trigger the onAction call back and pass in the double click value if the button is set up to use it
+    data.onAction(doubleClick)
 
   end
 
+end
+
+function EditorUI:SelectButton(data, value)
+  data.selected = value
+  self:Invalidate(data)
 end

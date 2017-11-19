@@ -155,11 +155,18 @@ function EditorUI:CreateInputArea(flag, rect, text, toolTip, pattern, font, forc
 
 end
 
-
 function EditorUI:UpdateInputArea(data)
 
   if(data == nil) then
+
     return
+  end
+
+  if(data.resetValidation == true)then
+    -- Clear validation from previous update
+    self:ResetValidation(data)
+    data.resetValidation = false
+
   end
 
   -- Do the first test to see if we are in the right area to detect a collision
@@ -183,6 +190,7 @@ function EditorUI:UpdateInputArea(data)
         self:EditInputArea(data, true)
 
       end
+
 
     else
 
@@ -242,6 +250,9 @@ function EditorUI:UpdateInputArea(data)
 
 
   end
+
+  -- Redraw the display
+  self:DrawInputArea(data)
 
 end
 
@@ -651,9 +662,6 @@ function EditorUI:EditInputArea(data, value)
 
   end
 
-  -- TODO this is hacky, just doing it for testing so clean it up to only draw when needed
-  self:DrawInputArea(data)
-
 end
 
 function EditorUI:DrawInputArea(data)
@@ -690,18 +698,18 @@ function EditorUI:DrawInputArea(data)
       -- Draw the text to the tilemap and pad it so it fills up the display
       -- DrawText(string.lpad(line, data.width, " "), x, y, data.drawMode, data.font, data.colorOffset, data.spacing)
 
-      -- local drawArguments = {
-      data.drawArguments[1] = string.lpad(line, data.width, " ")
-      data.drawArguments[2] = x
-      data.drawArguments[3] = y
-      -- data.drawArguments[4] = data.drawMode
-      --   data.font,
-      data.drawArguments[6] = data.enabled == true and data.colorOffset or data.disabledColorOffset
-      --   data.spacing
-      -- }
+      local drawArguments = {
+        string.lpad(line, data.width, " "),
+        x,
+        y,
+        data.drawMode,
+        data.font,
+        data.enabled == true and data.colorOffset or data.disabledColorOffset,
+        data.spacing
+      }
 
       -- TODO need to just use the tile draw for the cursor
-      self:NewDraw("DrawText", data.drawArguments)
+      self:NewDraw("DrawText", drawArguments)
 
       -- Increase the y for the next line
       y = y + ((data.drawMode == DrawMode.Tile) and 1 or 8)
@@ -709,7 +717,8 @@ function EditorUI:DrawInputArea(data)
     end
     --
 
-    self:ResetValidation(data)
+    -- tell the component to clear validation on the next frame since we've rendered everything
+    data.resetValidation = true
 
   end
 
@@ -731,7 +740,8 @@ function EditorUI:DrawInputArea(data)
       data.cursorDrawArguments[3] = data.rect.y + ((data.cursor.r - data.scrollFirst) * self.spriteSize.y)
       --   DrawMode.Sprite,
       --   data.font,
-      --   data.colorOffset,
+      data.cursorDrawArguments[6] = data.colorOffset
+
       --   data.spacing
       -- }
 
@@ -839,5 +849,18 @@ function EditorUI:InputAreaScrollTo(data, hVal, vVal)
 
   data.scrollValue.v = vVal
   data.scrollValue.h = hVal
+
+end
+
+function EditorUI:GetInputAreaText(data)
+
+  local totalLines = #data.lines
+  local text = ""
+
+  for i = 1, totalLines do
+    text = text .. data.lines[i] .. "\n"
+  end
+
+  return text
 
 end

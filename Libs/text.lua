@@ -21,7 +21,7 @@ function EditorUI:CreateText(rect, text, font, colorOffset, spacing, drawMode)
   data.font = font or "default"
   data.colorOffset = colorOffset or 0
   data.spacing = spacing or 0
-  data.drawMode = DrawMode.Tile
+  data.drawMode = DrawMode.TilemapCache
 
   data.drawArguments = {
     "", -- text (1)
@@ -64,6 +64,11 @@ end
 
 function EditorUI:ChangeText(data, text)
 
+  -- If the text is the same, don't update the text component and exit out of the method
+  if(data.drawArguments[1] == text) then
+    return
+  end
+
   self:Invalidate(data)
 
   -- Save the text on the draw arguments
@@ -79,5 +84,3 @@ function EditorUI:ChangeText(data, text)
   end
 
 end
-
--- TODO need a draw method for lines of text that all text components can share

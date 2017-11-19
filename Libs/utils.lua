@@ -66,6 +66,15 @@ function math.pos(index, width)
   return index % width, math.floor(index / width)
 end
 
+function table.find(f, l) -- find element v of l satisfying f(v)
+  for _, v in ipairs(l) do
+    if f(v) then
+      return v
+    end
+  end
+  return nil
+end
+
 -- index = x + y * width;
 
 

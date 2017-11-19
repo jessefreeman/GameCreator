@@ -12,8 +12,9 @@
 
 -- Load in the editor framework script to access tool components
 LoadScript("sb-sprites")
-LoadScript("editor-ui")
+LoadScript("pixel-vision-os")
 
+local pixelVisionOS = nil
 local editorUI = nil
 
 local toolName = "System Template"
@@ -40,8 +41,16 @@ function Init()
 
 	BackgroundColor(22)
 
+	-- Create an instance of the Pixel Vision OS
+	pixelVisionOS = PixelVisionOS:Init()
+
 	-- Get a reference to the Editor UI
-	editorUI = EditorUI:Init()
+	editorUI = pixelVisionOS.editorUI
+
+	-- Change the title
+	pixelVisionOS:ChangeTitle(toolName)
+
+	-- TODO this text should use the EditorUI Text component
 
 	titleData = editorUI:CreateText({x = 8, y = 32}, title)
 
@@ -52,6 +61,16 @@ function Init()
 	-- We are going to render the message in a box as tiles.
 	messageData = editorUI:CreateText({x = 8, y = 48, w = 248}, messageTxt)
 	-- DrawText(messageTxt, 1, 6, DrawMode.Tile, "default", 0, 0, 31)
+
+	-- -- actions:AddButton(1, 16, "Action Button", OnAction, "This is an example action button.", true)
+	pixelVisionOS:DisplayMessage(toolName..": This is an empty tool opening message.", 5)
+
+	pixelVisionOS:AddActionButton(1, 8, "actionbutton", "Button", "This is a simple action button", OnAction, true)
+	pixelVisionOS:AddActionButton(2, 9 * 8, "actionbuttontwostep", "Two Step", {"Clicking this button two times will disable it", "Are you sure you want to disable this button? Click again."}, OnTwoStepAction, true, true)
+	pixelVisionOS:AddActionButton(3, 21 * 8, "actionbuttondisabled", "Disabled", "No tool tip for disabled button", OnDisabledAction, false)
+
+	-- Disable the button to test that it works correctly
+	pixelVisionOS:EnableActionButton(3, false)
 
 	-- Configure hSlider
 	hSliderData = editorUI:CreateSlider(1, {x = 8, y = 112, w = 112, h = 8}, "hsliderhandle", "This is a horizontal slider.", true)
@@ -92,18 +111,23 @@ function Init()
 	volumeInputData.max = 100
 	volumeInputData.disabledColorOffset = 8
 	volumeInputData.onAction = OnVolumeFieldUpdate
+	volumeInputData.colorOffset = 32
+	volumeInputData.disabledColorOffset = 34
 
 	nameInputData = editorUI:CreateInputField(6, {x = 16, y = 192, w = 11 * 8}, "Untitled", "Enter in a file name to this string input field.", "file")
+	nameInputData.colorOffset = 32
 
 	pickerInputData = editorUI:CreateInputField(9, {x = 216, y = 192, w = 8}, "1", "You are on page %s of 9. Enter new page number.", "number")
 	pickerInputData.min = 1
 	pickerInputData.max = 9
 	pickerInputData.onAction = UpdatePickerButtons
+	pickerInputData.colorOffset = 32
 
 	editorUI:ChangeInputField(pickerInputData, 1)
 
 	-- TODO this is broken, need to add back in the height to make it multi-line and turn on wrapping
-	inputAreaData = editorUI:CreateInputField(4, {x = 16, y = 136, w = 208}, "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus ultricies nunc ex, id commodo mauris iaculis nec.", "Text editor help")
+	inputAreaData = editorUI:CreateInputArea(4, {x = 16, y = 136, w = 208, h = 32}, "Lorem ipsum dolor sit amet\n, consectetur adipiscing elit. \nVivamus ultricies nunc ex, \nid commodo mauris iaculis nec.", "Text editor help")
+	inputAreaData.colorOffset = 32
 
 	-- inputAreaData.wrap = true
 	inputAreaData.editable = true
@@ -128,6 +152,24 @@ function OnVolumeFieldUpdate(text)
 	editorUI:ChangeSlider(hSliderData, value, false)
 	editorUI:ChangeSlider(vSliderData, value, false)
 
+end
+
+function OnAction()
+	pixelVisionOS:DisplayMessage("The 'Button' was pressed")
+end
+
+function OnTwoStepAction()
+
+	pixelVisionOS:EnableActionButton(2, false)
+
+	pixelVisionOS:DisplayMessage("The 'Two Step' button was disabled")
+
+	pixelVisionOS:RemoveActionButton(3)
+
+end
+
+function OnDisabledAction()
+	pixelVisionOS:DisplayMessage("Shouldn't be able to click on disabled buttons")
 end
 
 function OnValueChange(value)
@@ -190,7 +232,7 @@ function OnCheckbox(value)
 		message = message .. ": " .. table.concat(selections, ",")
 
 	end
-	-- pixelVisionOS:DisplayMessage(message ..".")
+	pixelVisionOS:DisplayMessage(message ..".")
 
 end
 
@@ -217,7 +259,7 @@ function OnMute(value)
 end
 
 function OnPage(value)
-	-- pixelVisionOS:DisplayMessage("Page " .. value .. " selected")
+	pixelVisionOS:DisplayMessage("Page " .. value .. " selected")
 end
 -- The Update() method is part of the game's life cycle. The engine calls Update() on every frame
 -- before the Draw() method. It accepts one argument, timeDelta, which is the difference in
@@ -225,7 +267,7 @@ end
 function Update(timeDelta)
 
 	-- This needs to be the first call to make sure all of the OS and editor UI is updated first
-	editorUI:Update(timeDelta)
+	pixelVisionOS:Update(timeDelta)
 
 	-- TODO add your own update logic here
 
@@ -252,7 +294,7 @@ function Update(timeDelta)
 	editorUI:UpdateInputField(pickerInputData)
 	--
 
-	editorUI:UpdateInputField(inputAreaData)
+	editorUI:UpdateInputArea(inputAreaData)
 
 end
 
@@ -265,6 +307,6 @@ function Draw()
 	RedrawDisplay()
 
 	-- The UI should be the last thing to draw after your own custom draw calls
-	editorUI:Draw()
+	pixelVisionOS:Draw()
 
 end

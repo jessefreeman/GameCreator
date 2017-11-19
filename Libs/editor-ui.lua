@@ -138,8 +138,8 @@ function EditorUI:CreateData(flag, rect, spriteName, toolTip, forceDraw)
     data.tiles = {
       c = math.floor(data.rect.x / self.spriteSize.x),
       r = math.floor(data.rect.y / self.spriteSize.y),
-      w = math.floor(data.rect.w / self.spriteSize.x),
-      h = math.floor(data.rect.h / self.spriteSize.y)
+      w = math.ceil(data.rect.w / self.spriteSize.x),
+      h = math.ceil(data.rect.h / self.spriteSize.y)
     }
 
     -- If the component has a position, append the tile column and row to the name to make it more unique
@@ -173,7 +173,6 @@ function EditorUI:NewDraw(callName, args)
 
       -- Call the global draw function
       _G[callName](unpack(args))
-
     end
 
   }
