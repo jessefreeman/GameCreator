@@ -26,7 +26,12 @@ function EditorUI:CreateButton(flag, rect, spriteName, toolTip, forceDraw)
   -- Customize the default name by adding Button to it
   data.name = "Button" .. data.name
   data.onClick = function(tmpData)
-    self:ClickButton(tmpData)
+
+    self:ClickButton(tmpData, true, tmpData.doubleClickTime < tmpData.doubleClickDelay)
+
+    tmpData.doubleClickTime = 0
+
+    -- self:ClickButton(tmpData)
   end
   -- Make sure the button correctly sizes itself based on the cached sprite data
   self:UpdateButtonSizeFromCache(data)
@@ -71,8 +76,6 @@ function EditorUI:UpdateButton(data, hitRect)
   if(data == nil) then
     return
   end
-
-
 
   -- If the button has data but it's not enabled exit out of the update
   if(data.enabled == false) then
@@ -152,29 +155,11 @@ function EditorUI:UpdateButton(data, hitRect)
 
       end
 
-
-
       -- Check to see if the button is pressed and has an onAction callback
       if(self.collisionManager.active == data.flagID) then
 
-        -- TODO need to make sure the click time is less than the delay and reset it
-
-        -- Test to see if this button is a toggle button if it has a selected value
-        -- if(data.selected ~= nil) then
-        --
-        --   -- Toggle the button
-        --   self:ToggleButton(data)
-        --
-
-        -- else
-        -- data.onClick(data)
-
-        -- Reset double click
-
         -- Click the button
-        self:ClickButton(data, true, data.doubleClickTime < data.doubleClickDelay)
-
-        data.doubleClickTime = 0
+        data.onClick(data)
         -- end
 
       end
@@ -216,7 +201,7 @@ function EditorUI:RedrawButton(data)
     end
 
     -- Test to see if the button is disabled. If there is a disabled sprite data, we'll change the state to disabled. By default, always use the up state.
-    if(data.enabled == false and data.cachedSpriteData["disabled"] ~= nil) then --_G[spriteName .. "disabled"] ~= nil) then
+    if(data.enabled == false and data.cachedSpriteData["disabled"] ~= nil and data.selected ~= true) then --_G[spriteName .. "disabled"] ~= nil) then
       state = "disabled"
 
     end

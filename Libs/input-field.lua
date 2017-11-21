@@ -279,8 +279,9 @@ function EditorUI:ChangeInputField(data, text, trigger)
       if(value > data.max) then value = data.max end
     end
 
+    -- TODO need to add logic for handling negative numbers
     -- update the text var with the new value
-    text = string.rpad(tostring(value), data.width, value > 0 and "0" or " ")
+    text = string.rpad(tostring(value), data.width, "0")
   end
 
   -- Look for any custom validation

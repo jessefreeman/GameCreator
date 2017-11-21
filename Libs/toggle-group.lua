@@ -19,6 +19,8 @@ function EditorUI:CreateToggleButton(flag, rect, spriteName, toolTip, forceDraw)
   -- Use the same data as the button
   local data = self:CreateButton(flag, rect, spriteName, toolTip, forceDraw)
 
+  data.name = "Toggle" .. data.name
+
   -- Add the selected property to make this a toggle button
   data.selected = false
 
@@ -145,38 +147,7 @@ function EditorUI:UpdateToggleGroup(data)
 
   end
 
-  --self.collisionManager:ClearHovered()
-
 end
-
--- function EditorUI:DrawToggleGroup(data)
---
---   -- Make sure there is button data to render
---   if(data.buttons == nil)then
---     return
---   end
---
---   -- We'll use this to store button data as we draw the toggle group
---   local buttonData = nil
---
---   -- Get the total number of buttons
---   local total = #data.buttons
---
---   -- Loop through each of the buttons and update them
---   for i = 1, total do
---
---     -- Get the button data from the collection of buttons
---     buttonData = data.buttons[i]
---     if(buttonData ~= nil) then
---       -- Check to see if the button is actually invalid
---       -- if(buttonData.invalid == true or data.hovered == i) then
---       --TODO this is constantly be called, need to optimize it better
---       self:DrawButton(buttonData)
---       -- end
---     end
---   end
---
--- end
 
 function EditorUI:SelectToggleButton(data, id, trigger)
   -- TODO need to make sure we handle multiple selections vs one at a time
@@ -194,8 +165,6 @@ function EditorUI:SelectToggleButton(data, id, trigger)
   if(id == buttonData.selected) then
     return
   end
-
-
 
   if(data.singleSelection == true) then
     -- Make sure that the button is selected before we disable it
@@ -243,7 +212,6 @@ end
 -- TODO is anything using this?
 function EditorUI:ToggleGroupSelections(data)
   local selections = {}
-  print("Toggle Data", data.name)
   local total = #data.buttons
   local buttonData = nil
   for i = 1, total do
