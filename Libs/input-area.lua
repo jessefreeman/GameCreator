@@ -75,7 +75,8 @@ function EditorUI:CreateInputArea(flag, rect, text, toolTip, pattern, font, forc
     hex = '%x',
     number = '%d',
     file = '[_%-%w]',
-    keys = '%a'
+    keys = '%a',
+    note = '[A-G#]'
   }
 
   -- Set up the draw arguments
