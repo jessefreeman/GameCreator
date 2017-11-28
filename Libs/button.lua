@@ -63,11 +63,12 @@ function EditorUI:UpdateButtonSizeFromCache(data)
 
     -- Cache the tile draw arguments for rendering
     data.spriteDrawArgs = {spriteData.spriteIDs, 0, 0, spriteData.width, false, false, DrawMode.Sprite, 0, false}
-    data.tileDrawArgs = {0, 0, spriteData.width, spriteData.spriteIDs, 0, data.flagID}
+    data.tileDrawArgs = {spriteData.spriteIDs, data.tiles.c, data.tiles.r, spriteData.width, DrawMode.Tile, 0}--{0, 0, spriteData.width, spriteData.spriteIDs, 0, data.flagID}
 
-    -- else
-    --   data.rect = {x = x, y = y, w = 0, h = 0}
+    self:SetUIFlags(data.tiles.c, data.tiles.r, data.tiles.w, data.tiles.h, data.flagID)
+
   end
+
 end
 
 function EditorUI:UpdateButton(data, hitRect)
@@ -210,20 +211,12 @@ function EditorUI:RedrawButton(data)
     if(data.cachedSpriteData[state] ~= nil and data.tileDrawArgs ~= nil) then
 
       -- Update the tile draw arguments
-
-      -- X pos
-      data.tileDrawArgs[1] = data.tiles.c or 0--math.floor(data.rect.x / self.spriteSize.x)
-
-      -- Y pos
-      data.tileDrawArgs[2] = data.tiles.r or 0--math.floor(data.rect.y / self.spriteSize.y)
-
-      data.tileDrawArgs[4] = data.cachedSpriteData[state].spriteIDs
+      data.tileDrawArgs[1] = data.cachedSpriteData[state].spriteIDs
 
       -- Color offset
-      data.tileDrawArgs[5] = data.cachedSpriteData[state].colorOffset or 0
+      data.tileDrawArgs[6] = data.cachedSpriteData[state].colorOffset or 0
 
-      -- Create a new draw call
-      self:NewDraw("UpdateTiles", data.tileDrawArgs)
+      self:NewDraw("DrawTiles", data.tileDrawArgs)
 
     end
 
@@ -243,18 +236,41 @@ function EditorUI:ClearButton(data, flag)
   -- Get the cached empty sprite data
   local spriteData = data.cachedSpriteData["empty"]
 
+  print("Clear Button")
+
   -- make sure we have sprite data to draw
   if(spriteData ~= nil) then
 
     -- Get the correct color offset
-    local colorOffset = spriteData.colorOffset or 0
+    -- local colorOffset = spriteData.colorOffset or 0
+    -- print("Erase Button", button.name)
 
+    -- Update the tile draw arguments
+    data.tileDrawArgs[1] = spriteData.spriteIDs
+
+    -- Color offset
+    data.tileDrawArgs[6] = spriteData.colorOffset or 0
+
+    self:NewDraw("DrawTiles", data.tileDrawArgs)
+
+    self:SetUIFlags(data.tiles.c, data.tiles.r, data.tiles.w, data.tiles.h, flag)
 
     -- TODO need to use the tile position not recalculate it
     -- Draw the tiles to the background
-    local args = {math.floor((data.rect.x) / self.spriteSize.x), math.floor((data.rect.y) / self.spriteSize.y), spriteData.width, spriteData.spriteIDs, colorOffset, flag}
+    -- local args = {math.floor((data.rect.x) / self.spriteSize.x), math.floor((data.rect.y) / self.spriteSize.y), spriteData.width, spriteData.spriteIDs, colorOffset, flag}
+    --
+    -- self:NewDraw("UpdateTiles", args)
 
-    self:NewDraw("UpdateTiles", args)
+    -- local args = {,, spriteData.spriteIDs, colorOffset, flag}
+
+    -- local x = math.floor((data.rect.x) / self.spriteSize.x)
+    -- local y = math.floor((data.rect.y) / self.spriteSize.y)
+    -- local args = {spriteData.spriteIDs, data.tiles.c, data.tiles.r, total, DrawMode.Sprite, colorOffset}
+    --
+    -- self:NewDraw("DrawTiles", args)
+
+    -- Update the flag
+    -- Flag(data.tiles.c, data.tiles.r, flag)
 
   end
 
