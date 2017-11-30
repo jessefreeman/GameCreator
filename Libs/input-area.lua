@@ -147,7 +147,7 @@ function EditorUI:CreateInputArea(flag, rect, text, toolTip, pattern, font, forc
 
   --data.rect = {x = data.x, y = data.y, w = (data.width * self.spriteSize.x), h = (data.height * self.spriteSize.y)}
 
-  self:SetUIFlags(data.tiles.c, data.tiles.r, data.tiles.w, data.tiles.h, data.flagID)
+  -- self:SetUIFlags(data.tiles.c, data.tiles.r, data.tiles.w, data.tiles.h, data.flagID)
 
   -- Make sure that the correct scroll values are calculated
   self:InputAreaMoveCursorTo(data, 0, 0)
@@ -159,7 +159,6 @@ end
 function EditorUI:UpdateInputArea(data)
 
   if(data == nil) then
-
     return
   end
 
@@ -171,84 +170,74 @@ function EditorUI:UpdateInputArea(data)
   end
 
   -- Do the first test to see if we are in the right area to detect a collision
-  if(self.collisionManager.hovered == data.flagID) then
+  -- if(self.collisionManager.hovered == data.flagID) then
 
-    -- print("Inside Text", data.name)
-    -- Ready to test finer collision if needed
-    if(self.collisionManager:MouseInRect(data.rect) == true or data.inFocus == true) then
+  local overrideFocus = (data.inFocus == true and self.collisionManager.mouseDown)
 
-      -- Set focus
-      self:SetFocus(data)
+  -- print("Inside Text", data.name)
+  -- Ready to test finer collision if needed
+  if(self.collisionManager:MouseInRect(data.rect) == true or overrideFocus) then
 
-      self.cursorID = 3
+    -- Set focus
+    self:SetFocus(data, 3)
 
-      if(self.collisionManager.active == data.flagID and data.editing == false) then
+    if(self.collisionManager.mouseReleased == true and data.editing == false) then
 
-        print("Click to edit")
-        self:InputAreaMoveCursorToMousePos(data)
+      print("Click to edit")
+      self:InputAreaMoveCursorToMousePos(data)
 
-        -- Enter edit mode
-        self:EditInputArea(data, true)
-
-      end
-
-
-    else
-
-      -- If the mouse is not in the rect, clear the focus
-      self:ClearFocus(data)
+      -- Enter edit mode
+      self:EditInputArea(data, true)
 
     end
 
   else
-    -- If the mouse isn't over the component clear the focus
-    self:ClearFocus(data)
+
+    -- If the mouse is not in the rect, clear the focus
+    if(data.inFocus == true) then
+      self:ClearFocus(data)
+    end
 
   end
+
+  -- else
+  --   -- If the mouse isn't over the component clear the focus
+  --   -- self:ClearFocus(data)
+  --
+  -- end
 
 
   if(data.editing == true) then
 
-    local lastInput = data.captureInput()
+    if(self.collisionManager.mouseReleased == true ) then
 
-    if(lastInput ~= "") then
-
-      self:InputAreaOnInput(data, lastInput)
-
-    end
-
-    -- if we are in edit mode, we need to update the cursor blink time
-    data.blinkTime = data.blinkTime + self.timeDelta
-
-    if(data.blinkTime > data.blinkDelay) then
-      data.blinkTime = 0
-      data.blink = not data.blink
-
-      --print("Blink")
-    end
-
-    -- TODO need to add in logic to support dragging, selection, etc.
-
-    -- While in edit mode, check to see if the mouse is pressed
-    if(MouseButton(0, InputState.Released)) then
-
-      -- Check to see if the mouse is outside of the text area
-      if(self.collisionManager.hovered ~= data.flagID) then
-
-        -- Exit edit mode
+      if(data.inFocus == false)then
         self:EditInputArea(data, false)
-
-        -- If the mouse is still inside of the input area
       else
-
         -- Update the mouse cursor
         self:InputAreaMoveCursorToMousePos(data)
+      end
+
+    else
+
+      local lastInput = data.captureInput()
+
+      if(lastInput ~= "") then
+
+        self:InputAreaOnInput(data, lastInput)
+
+      end
+
+      -- if we are in edit mode, we need to update the cursor blink time
+      data.blinkTime = data.blinkTime + self.timeDelta
+
+      if(data.blinkTime > data.blinkDelay) then
+        data.blinkTime = 0
+        data.blink = not data.blink
 
       end
 
     end
-
-
 
   end
 

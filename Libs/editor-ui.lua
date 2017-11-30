@@ -198,14 +198,14 @@ function EditorUI:Enable(data, value)
   self:Invalidate(data)
 end
 
-function EditorUI:SetUIFlags(col, row, width, height, flag)
+function EditorUI:SetUIFlags(rect, flag)
 
-  local startCol = col - 1
-  local startRow = row - 1
+  local startCol = rect.c - 1
+  local startRow = rect.r - 1
 
-  for i = 1, height do
+  for i = 1, rect.h do
 
-    for j = 1, width do
+    for j = 1, rect.w do
 
       Flag(startCol + j, startRow + i, flag)
 
@@ -217,10 +217,16 @@ end
 
 function EditorUI:SetFocus(data, cursor)
 
-  -- Check to see if the passed in component is in focus
-  if(data.inFocus == false) then
-    data.inFocus = true
+  if(data.inFocus == true) then
+    return
   end
+
+  -- print("Set Focus", data.name)
+
+  -- Check to see if the passed in component is in focus
+  -- if(data.inFocus == false) then
+  data.inFocus = true
+  -- end
 
   -- Update the cursor
   self.cursorID = cursor or 2
@@ -233,22 +239,32 @@ end
 function EditorUI:ClearFocus(data)
 
   -- See if the component is in focus
-  if(data.inFocus == true) then
-
-    -- Set the component to not be in focus
-    data.inFocus = false
-
-    -- Return the cursor back to the pointer
-    self.cursorID = 1
-
-    -- Clear the hover state
-    self.collisionManager:ClearHovered()
-
-    -- TODO need to look into if we should clear any UI in focus or just the same one?
-
-    -- Remove the component in focus from the editor UI
-    self.inFocusUI = nil
-
+  if(data.inFocus == false) then
+    return
   end
+
+  -- print("Clear Focus", data.name)
+
+
+  -- Set the component to not be in focus
+  data.inFocus = false
+
+  -- Return the cursor back to the pointer
+  self.cursorID = 1
+
+  -- Clear the hover state
+  -- self.collisionManager:ClearHovered()
+
+  -- TODO need to look into if we should clear any UI in focus or just the same one?
+
+  -- Remove the component in focus from the editor UI
+
+  -- Clear the focus of the last UI object
+  if(self.inFocusUI ~= nil) then
+    self.inFocusUI.inFocus = false
+  end
+
+  self.inFocusUI = nil
+
 
 end

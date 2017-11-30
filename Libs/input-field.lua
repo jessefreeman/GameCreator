@@ -89,83 +89,128 @@ function EditorUI:UpdateInputField(data)
   end
 
   -- Do the first test to see if we are in the right area to detect a collision
-  if(self.collisionManager.hovered == data.flagID) then
+  -- if(self.collisionManager.hovered == data.flagID) then
 
-    -- print("Inside Text", data.name)
-    -- Ready to test finer collision if needed
-    if(self.collisionManager:MouseInRect(data.rect) == true or data.inFocus == true) then
+  local overrideFocus = (data.inFocus == true and self.collisionManager.mouseDown)
 
-      -- Set focus
-      self:SetFocus(data)
+  -- print("Inside Text", data.name)
+  -- Ready to test finer collision if needed
+  if(self.collisionManager:MouseInRect(data.rect) == true or overrideFocus) then
 
-      self.cursorID = 3
+    -- Set focus
+    self:SetFocus(data)
 
-      if(self.collisionManager.active == data.flagID and data.editing == false) then
+    self.cursorID = 3
 
-        --print("Click to edit")
-        self:InputAreaMoveCursorToMousePos(data)
+    if(self.collisionManager.mouseReleased == true and data.editing == false) then
 
-        -- Enter edit mode
-        self:EditInputField(data, true)
+      --print("Click to edit")
+      self:InputAreaMoveCursorToMousePos(data)
 
-      end
-
-    else
-
-      -- If the mouse is not in the rect, clear the focus
-      self:ClearFocus(data)
+      -- Enter edit mode
+      self:EditInputField(data, true)
 
     end
 
   else
-    -- If the mouse isn't over the component clear the focus
-    self:ClearFocus(data)
+
+    -- If the mouse is not in the rect, clear the focus
+    if(data.inFocus == true) then
+      self:ClearFocus(data)
+    end
 
   end
 
+  -- else
+  --   -- If the mouse isn't over the component clear the focus
+  --   -- self:ClearFocus(data)
+  --
+  -- end
 
   if(data.editing == true) then
 
-    local lastInput = data.captureInput()
+    if(self.collisionManager.mouseReleased == true ) then
 
-    if(lastInput ~= "") then
-
-      self:InputAreaOnInput(data, lastInput)
-
-    end
-
-    -- if we are in edit mode, we need to update the cursor blink time
-    data.blinkTime = data.blinkTime + self.timeDelta
-
-    if(data.blinkTime > data.blinkDelay) then
-      data.blinkTime = 0
-      data.blink = not data.blink
-
-      --print("Blink")
-    end
-
-    -- TODO need to add in logic to support dragging, selection, etc.
-
-    -- While in edit mode, check to see if the mouse is pressed
-    if(MouseButton(0, InputState.Released)) then
-
-      -- Check to see if the mouse is outside of the text area
-      if(self.collisionManager.hovered ~= data.flagID) then
-
-        -- Exit edit mode
+      if(data.inFocus == false)then
         self:EditInputField(data, false)
-
-        -- If the mouse is still inside of the input area
       else
-
         -- Update the mouse cursor
         self:InputAreaMoveCursorToMousePos(data)
+      end
+
+    else
+
+      local lastInput = data.captureInput()
+
+      if(lastInput ~= "") then
+
+        self:InputAreaOnInput(data, lastInput)
+
+      end
+
+      -- if we are in edit mode, we need to update the cursor blink time
+      data.blinkTime = data.blinkTime + self.timeDelta
+
+      if(data.blinkTime > data.blinkDelay) then
+        data.blinkTime = 0
+        data.blink = not data.blink
 
       end
 
     end
 
   end
+
+  -- if(data.editing == true) then
+  --
+  --   if(self.collisionManager.mouseReleased == true and data.inFocus == false) then
+  --
+  --     self:EditInputField(data, false)
+  --   elseif(self.collisionManager.mouseReleased == true) then
+  --
+  --     self:InputAreaMoveCursorToMousePos(data)
+  --
+  --   else
+  --     local lastInput = data.captureInput()
+  --
+  --     if(lastInput ~= "") then
+  --
+  --       self:InputAreaOnInput(data, lastInput)
+  --
+  --     end
+  --
+  --     -- if we are in edit mode, we need to update the cursor blink time
+  --     data.blinkTime = data.blinkTime + self.timeDelta
+  --
+  --     if(data.blinkTime > data.blinkDelay) then
+  --       data.blinkTime = 0
+  --       data.blink = not data.blink
+  --
+  --       --print("Blink")
+  --     end
+  --
+  --     -- TODO need to add in logic to support dragging, selection, etc.
+  --
+  --     -- -- While in edit mode, check to see if the mouse is pressed
+  --     -- if(MouseButton(0, InputState.Released)) then
+  --     --
+  --     --   -- Check to see if the mouse is outside of the text area
+  --     --   if(self.collisionManager.hovered ~= data.flagID) then
+  --     --
+  --     --     -- Exit edit mode
+  --     --     self:EditInputField(data, false)
+  --     --
+  --     --     -- If the mouse is still inside of the input area
+  --     --   else
+  --     --
+  --     --     -- Update the mouse cursor
+  --     --     self:InputAreaMoveCursorToMousePos(data)
+  --
+  --   end
+  --
+  -- end
+
+  -- end
 
   self:DrawInputArea(data)
 

@@ -28,7 +28,7 @@ function EditorUI:CreatePicker(flag, rect, itemWidth, itemHeight, total, spriteN
   data.toolTip = toolTip
   data.hoverIndex = -1
   data.selected = -1
-
+  data.overIndex = -1
   -- TODO need to use the sprite cache instead
 
   local selectedSpriteData = _G[spriteName .. "selected"]
@@ -43,38 +43,37 @@ function EditorUI:CreatePicker(flag, rect, itemWidth, itemHeight, total, spriteN
     data.overDrawArgs = {selectedSpriteData.spriteIDs, 0, 0, selectedSpriteData.width}
   end
 
-  self:SetUIFlags(data.tiles.c, data.tiles.r, data.tiles.w, data.tiles.h, data.flagID)
-
   return data
+
 end
 
 function EditorUI:UpdatePicker(data)
 
-  if(self.collisionManager.hovered ~= data.flagID) then
-    data.overIndex = -1
+  local overrideFocus = (data.inFocus == true and self.collisionManager.mouseDown)
 
-    if(data.inFocus == true) then
-      self:ClearFocus(data)
-    end
+  -- Ready to test finer collision if needed
+  if(self.collisionManager:MouseInRect(data.rect) == true) then
 
-    -- return
-  else
+    data.tmpX = math.floor((self.collisionManager.mousePos.x - data.rect.x) / data.itemWidth)
+    data.tmpY = math.floor((self.collisionManager.mousePos.y - data.rect.y) / data.itemHeight)
 
-    -- TODO we only want to do this if the mouse is inside of the bounds of the Picker
-
-    local tmpX = math.floor((self.collisionManager.mousePos.x - data.rect.x) / data.itemWidth)
-    local tmpY = math.floor((self.collisionManager.mousePos.y - data.rect.y) / data.itemHeight)
-
-    local index = math.index(tmpX, tmpY, data.columns)
+    local index = math.index(data.tmpX, data.tmpY, data.columns)
 
 
 
     if(index == data.selected or index > data.total) then
-      data.overIndex = -1
-      self.collisionManager:ClearHovered()
 
-      self:ClearFocus(data)
-      --return
+      data.overIndex = -1
+
+      if(data.inFocus == true) then
+
+        data.overIndex = -1
+
+        -- If we are not in the button's rect, clear the focus
+        self:ClearFocus(data)
+
+      end
+
     else
 
       -- data.hoverPos.x = math.floor((self.collisionManager.mousePos.x - data.x) / data.itemWidth) * data.itemWidth
@@ -86,25 +85,66 @@ function EditorUI:UpdatePicker(data)
       data.overIndex = index
 
       -- update over sprite position
-      if(data.overDrawArgs ~= nil) then
-        data.overDrawArgs[2] = (tmpX * data.itemWidth) + data.rect.x
-        data.overDrawArgs[3] = (tmpY * data.itemHeight) + data.rect.y
-        self:NewDraw("DrawSprites", data.overDrawArgs)
-      end
 
-      if(self.collisionManager.active == data.flagID) then
+
+      if(self.collisionManager.mouseReleased == true) then
         self:PickerSelect(data, index)
       end
     end
+
+
+  else
+
+    if(data.inFocus == true) then
+
+      data.overIndex = -1
+
+      -- If we are not in the button's rect, clear the focus
+      self:ClearFocus(data)
+
+    end
+
   end
 
+  self:RedrawPicker(data)
+
+
+  -- if(self.collisionManager.hovered ~= data.flagID) then
+  --
+  --
+  --   if(data.inFocus == true) then
+  --     self:ClearFocus(data)
+  --   end
+  --
+  --   -- return
+  -- else
+
+  -- TODO we only want to do this if the mouse is inside of the bounds of the Picker
+
+
+  -- end
+
   -- push the sprites into the draw queue
+
+
+end
+
+function EditorUI:RedrawPicker(data)
+
+  if(data.overIndex > - 1) then
+    data.overDrawArgs[2] = (data.tmpX * data.itemWidth) + data.rect.x
+    data.overDrawArgs[3] = (data.tmpY * data.itemHeight) + data.rect.y
+    self:NewDraw("DrawSprites", data.overDrawArgs)
+
+    -- Reset the over index for the next frame
+    data.overIndex = -1
+  end
+
   if(data.selectedDrawArgs ~= nil) then
 
     self:NewDraw("DrawSprites", data.selectedDrawArgs)
 
   end
-
 end
 
 function EditorUI:PickerSelect(data, value, triggerAction)

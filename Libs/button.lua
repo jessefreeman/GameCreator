@@ -62,10 +62,10 @@ function EditorUI:UpdateButtonSizeFromCache(data)
     data.rect.h = data.tiles.h * self.spriteSize.y
 
     -- Cache the tile draw arguments for rendering
-    data.spriteDrawArgs = {spriteData.spriteIDs, 0, 0, spriteData.width, false, false, DrawMode.Sprite, 0, false}
+    data.spriteDrawArgs = {spriteData.spriteIDs, 0, 0, spriteData.width, false, false, DrawMode.Sprite, 0, false, false}
     data.tileDrawArgs = {spriteData.spriteIDs, data.tiles.c, data.tiles.r, spriteData.width, DrawMode.Tile, 0}--{0, 0, spriteData.width, spriteData.spriteIDs, 0, data.flagID}
 
-    self:SetUIFlags(data.tiles.c, data.tiles.r, data.tiles.w, data.tiles.h, data.flagID)
+    -- self:SetUIFlags(data.tiles.c, data.tiles.r, data.tiles.w, data.tiles.h, data.flagID)
 
   end
 
@@ -101,83 +101,85 @@ function EditorUI:UpdateButton(data, hitRect)
     return
   end
 
-  -- Do the first test to see if we are in the right area to detect a collision
-  if(self.collisionManager.hovered == data.flagID) then
+  -- If the hit rect hasn't been overridden, then use the buttons own hit rect
+  if(hitRect == nil) then
+    hitRect = data.hitRect or data.rect
+  end
 
-    -- If the hit rect hasn't been overridden, then use the buttons own hit rect
-    if(hitRect == nil) then
-      hitRect = data.hitRect or data.rect
+  local overrideFocus = (data.inFocus == true and self.collisionManager.mouseDown)
+
+  -- Ready to test finer collision if needed
+  if(self.collisionManager:MouseInRect(hitRect) == true or overrideFocus) then
+
+    if(data.doubleClick == true) then
+
+      -- If the button wasn't in focus before, reset the timer since it's about to get focus
+      if(data.inFocus == false) then
+        data.doubleClickTime = 0
+      end
+
+      data.doubleClickTime = data.doubleClickTime + self.timeDelta
+
     end
 
-    local overrideFocus = (data.inFocus == true and self.collisionManager.mouseDown)
+    -- If we are in the collision area, set the focus
+    self:SetFocus(data)
 
-    -- Ready to test finer collision if needed
-    if(self.collisionManager:MouseInRect(hitRect) == true or overrideFocus) then
+    -- calculate the correct button over state
+    local state = "over"
 
-      if(data.doubleClick == true) then
+    if(data.selected == true) then
+      state = "selected" .. state
+    end
 
+    local spriteData = data.cachedSpriteData[state]
 
-        -- If the button wasn't in focus before, reset the timer since it's about to get focus
-        if(data.inFocus == false) then
-          data.doubleClickTime = 0
-        end
+    if(spriteData ~= nil and data.spriteDrawArgs ~= nil) then
 
-        data.doubleClickTime = data.doubleClickTime + self.timeDelta
+      -- Sprite Data
+      data.spriteDrawArgs[1] = spriteData.spriteIDs
 
-      end
+      -- X pos
+      data.spriteDrawArgs[2] = data.rect.x
 
-      -- If we are in the collision area, set the focus
-      self:SetFocus(data)
+      -- Y pos
+      data.spriteDrawArgs[3] = data.rect.y
 
-      -- calculate the correct button over state
-      local state = "over"
+      -- Color Offset
+      data.spriteDrawArgs[8] = spriteData.colorOffset or 0
 
-      if(data.selected == true) then
-        state = "selected" .. state
-      end
+      self:NewDraw("DrawSprites", data.spriteDrawArgs)
 
-      local spriteData = data.cachedSpriteData[state]
+    end
 
-      if(spriteData ~= nil and data.spriteDrawArgs ~= nil) then
+    -- TODO need to make sure we only register a click when over the right button. If the mouse was down and rolls over then releases, that shouldn't trigger a click
 
-        -- Sprite Data
-        data.spriteDrawArgs[1] = spriteData.spriteIDs
+    -- Check to see if the button is pressed and has an onAction callback
+    if(self.collisionManager.mouseReleased == true) then
 
-        -- X pos
-        data.spriteDrawArgs[2] = data.rect.x
+      -- Click the button
+      data.onClick(data)
+      -- end
 
-        -- Y pos
-        data.spriteDrawArgs[3] = data.rect.y
+    end
 
-        -- Color Offset
-        data.spriteDrawArgs[8] = spriteData.colorOffset or 0
+  else
 
-        self:NewDraw("DrawSprites", data.spriteDrawArgs)
-
-      end
-
-      -- Check to see if the button is pressed and has an onAction callback
-      if(self.collisionManager.active == data.flagID) then
-
-        -- Click the button
-        data.onClick(data)
-        -- end
-
-      end
-
-    else
+    if(data.inFocus == true) then
 
       -- If we are not in the button's rect, clear the focus
       self:ClearFocus(data)
 
     end
 
-  else
-
-    -- If the mouse is not over the button, clear the focus for this button
-    self:ClearFocus(data)
-
   end
+
+  -- else
+  --
+  --   -- If the mouse is not over the button, clear the focus for this button
+  --   self:ClearFocus(data)
+  --
+  -- end
 
   -- Make sure we don't need to redraw the button.
   self:RedrawButton(data)
@@ -236,14 +238,8 @@ function EditorUI:ClearButton(data, flag)
   -- Get the cached empty sprite data
   local spriteData = data.cachedSpriteData["empty"]
 
-  print("Clear Button")
-
   -- make sure we have sprite data to draw
   if(spriteData ~= nil) then
-
-    -- Get the correct color offset
-    -- local colorOffset = spriteData.colorOffset or 0
-    -- print("Erase Button", button.name)
 
     -- Update the tile draw arguments
     data.tileDrawArgs[1] = spriteData.spriteIDs
@@ -253,24 +249,7 @@ function EditorUI:ClearButton(data, flag)
 
     self:NewDraw("DrawTiles", data.tileDrawArgs)
 
-    self:SetUIFlags(data.tiles.c, data.tiles.r, data.tiles.w, data.tiles.h, flag)
-
-    -- TODO need to use the tile position not recalculate it
-    -- Draw the tiles to the background
-    -- local args = {math.floor((data.rect.x) / self.spriteSize.x), math.floor((data.rect.y) / self.spriteSize.y), spriteData.width, spriteData.spriteIDs, colorOffset, flag}
-    --
-    -- self:NewDraw("UpdateTiles", args)
-
-    -- local args = {,, spriteData.spriteIDs, colorOffset, flag}
-
-    -- local x = math.floor((data.rect.x) / self.spriteSize.x)
-    -- local y = math.floor((data.rect.y) / self.spriteSize.y)
-    -- local args = {spriteData.spriteIDs, data.tiles.c, data.tiles.r, total, DrawMode.Sprite, colorOffset}
-    --
-    -- self:NewDraw("DrawTiles", args)
-
-    -- Update the flag
-    -- Flag(data.tiles.c, data.tiles.r, flag)
+    -- self:SetUIFlags(data.tiles.c, data.tiles.r, data.tiles.w, data.tiles.h, flag)
 
   end
 

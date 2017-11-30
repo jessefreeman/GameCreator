@@ -53,7 +53,7 @@ function EditorUI:CreateSlider(flag, rect, spriteName, toolTip, horizontal)
 
   -- Make sure that the tilemap has the correct flag values
 
-  self:SetUIFlags(data.tiles.c, data.tiles.r, data.tiles.w, data.tiles.h, data.flagID)
+  -- self:SetUIFlags(data.tiles.c, data.tiles.r, data.tiles.w, data.tiles.h, data.flagID)
 
   -- Return the data
   return data
@@ -69,85 +69,79 @@ function EditorUI:UpdateSlider(data)
 
   local size = data.size - data.handleSize
 
-  -- Do the first test to see if we are in the right area to detect a collision
-  if(self.collisionManager.hovered == data.flagID) then
+  local overrideFocus = (data.inFocus == true and self.collisionManager.mouseDown)
 
-    -- Ready to test finer collision if needed
-    if(self.collisionManager:MouseInRect(data.rect) == true or data.inFocus == true) then
+  -- Ready to test finer collision if needed
+  if(self.collisionManager:MouseInRect(data.rect) == true or overrideFocus) then
 
-      -- Set focus
-      self:SetFocus(data)
+    -- TODO need to fix focus when you have the mouse down from another UI element and roll over a slider
+    -- Set focus
+    self:SetFocus(data)
 
-      -- Check to see if the mouse is down to update the handle position
-      if(self.collisionManager.mouseDown == true) then
+    -- Check to see if the mouse is down to update the handle position
+    if(self.collisionManager.mouseDown == true) then
 
-        -- Calculate the position
-        local dir = data.horizontal and "x" or "y"
-        local prop = "handle" .. string.upper(dir)
+      -- Calculate the position
+      local dir = data.horizontal and "x" or "y"
+      local prop = "handle" .. string.upper(dir)
 
-        -- Need to calculate the new x position
-        local newPos = self.collisionManager.mousePos[dir] - data.handleCenter
+      -- Need to calculate the new x position
+      local newPos = self.collisionManager.mousePos[dir] - data.handleCenter
 
-        -- Make sure the position is in range
-        if(newPos > size + data.rect[dir]) then
-          newPos = size + data.rect[dir]
-        elseif(newPos < data.rect[dir]) then
-          newPos = data.rect[dir]
-        end
-
-        -- Save the new position
-        data[prop] = newPos
-
-        -- Need to calculate the value
-        local percent = math.ceil(((data[prop] - data.rect[dir]) / size) * 100) / 100
-
-
-        -- TODO need to make sure all sliders use onAction instead of onUpdate
-        self:ChangeSlider(data, percent)
-        -- Calculate the percent and save it
-        -- data.value = percent
-
-        -- Use the onUpdate callback to change the value of other components linked to the slider
-        -- if(data.onUpdate ~= nil and self.refreshTime == 0) then
-        --   data.onUpdate(data.value)
-        -- end
-
+      -- Make sure the position is in range
+      if(newPos > size + data.rect[dir]) then
+        newPos = size + data.rect[dir]
+      elseif(newPos < data.rect[dir]) then
+        newPos = data.rect[dir]
       end
 
-    else
+      -- Save the new position
+      data[prop] = newPos
 
-      -- If the mouse is not in the rect, clear the focus
-      self:ClearFocus(data)
+      -- Need to calculate the value
+      local percent = math.ceil(((data[prop] - data.rect[dir]) / size) * 100) / 100
+
+
+      self:ChangeSlider(data, percent)
 
     end
 
   else
 
-    -- If the mouse isn't over the component clear the focus
-    self:ClearFocus(data)
-
-    -- If the component has changes and the mouse isn't over it, update the handle
-    if(data.invalid == true) then
-
-      -- If the mouse isn't on the slider, make sure it's position is correct
-      data.handleX = data.rect.x
-      data.handleY = data.rect.y
-
-      if(data.horizontal == true) then
-        data.handleX = data.handleX + (data.value * size)
-        data.handleY = data.handleY + data.offset
-      else
-        data.handleX = data.handleX + data.offset
-        data.handleY = data.handleY + (data.value * size)
-
-      end
-
-      -- Clear the validation
-      self:ResetValidation(data)
-
+    -- If the mouse is not in the rect, clear the focus
+    if(data.inFocus == true) then
+      self:ClearFocus(data)
     end
 
   end
+
+  -- else
+  --
+  --   -- If the mouse isn't over the component clear the focus
+  --   self:ClearFocus(data)
+  --
+  --   -- If the component has changes and the mouse isn't over it, update the handle
+  if(data.invalid == true) then
+
+    -- If the mouse isn't on the slider, make sure it's position is correct
+    data.handleX = data.rect.x
+    data.handleY = data.rect.y
+
+    if(data.horizontal == true) then
+      data.handleX = data.handleX + (data.value * size)
+      data.handleY = data.handleY + data.offset
+    else
+      data.handleX = data.handleX + data.offset
+      data.handleY = data.handleY + (data.value * size)
+
+    end
+
+    -- Clear the validation
+    self:ResetValidation(data)
+
+  end
+  --
+  -- end
 
   -- Update the handle sprites
   local spriteData = data.enabled == true and data.cachedSpriteData.up or data.cachedSpriteData.disabled
