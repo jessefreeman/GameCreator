@@ -10,15 +10,7 @@
   Learn more about making Pixel Vision 8 games at https://www.gitbook.com/@pixelvision8
 ]]--
 
-LoadScript("utils")
-
--- spritelib-start
-chest = {width = 2, unique = 4, total = 4, spriteIDs = {4, 5, 9, 10}}
-heartfull = {width = 1, unique = 1, total = 1, spriteIDs = {0}}
-hearthalf = {width = 1, unique = 1, total = 1, spriteIDs = {1}}
-skeletonfront = {width = 2, unique = 6, total = 6, spriteIDs = {2, 3, 7, 8, 11, 12}}
-watertile = {width = 1, unique = 1, total = 1, spriteIDs = {6}}
--- spritelib-end
+LoadScript("sb-sprites")
 
 -- This this is an empty game, we will the following text. We combined two sets of fonts into
 -- the default.font.png. Use uppercase for larger characters and lowercase for a smaller one.
@@ -35,22 +27,22 @@ local waveMode = 0
 local direction = {x = 0, y = 0}
 
 local skeletons = {
-  {sprites = skeletonfront.spriteIDs, width = skeletonfront.width, flipH = false, aboveBG = DrawMode.SpriteAbove, x = 104, y = 40},
-  {sprites = skeletonfront.spriteIDs, width = skeletonfront.width, flipH = false, aboveBG = DrawMode.SpriteBelow, x = 64, y = 70},
-  {sprites = skeletonfront.spriteIDs, width = skeletonfront.width, flipH = true, aboveBG = DrawMode.SpriteBelow, x = 120, y = 70},
-  {sprites = skeletonfront.spriteIDs, width = skeletonfront.width, flipH = false, aboveBG = DrawMode.SpriteAbove, x = 180, y = 120},
+  {sprites = skeleton.spriteIDs, width = skeleton.width, flipH = false, aboveBG = DrawMode.SpriteAbove, x = 104, y = 40},
+  {sprites = skeleton.spriteIDs, width = skeleton.width, flipH = false, aboveBG = DrawMode.SpriteBelow, x = 64, y = 70},
+  {sprites = skeleton.spriteIDs, width = skeleton.width, flipH = true, aboveBG = DrawMode.SpriteBelow, x = 120, y = 70},
+  {sprites = skeleton.spriteIDs, width = skeleton.width, flipH = false, aboveBG = DrawMode.SpriteAbove, x = 180, y = 120},
 
-  {sprites = skeletonfront.spriteIDs, width = skeletonfront.width, flipH = false, aboveBG = DrawMode.SpriteAbove, x = 72, y = 216},
-  {sprites = skeletonfront.spriteIDs, width = skeletonfront.width, flipH = false, aboveBG = DrawMode.SpriteAbove, x = 240, y = 256},
-  {sprites = skeletonfront.spriteIDs, width = skeletonfront.width, flipH = false, aboveBG = DrawMode.SpriteAbove, x = 160, y = 168},
-  {sprites = skeletonfront.spriteIDs, width = skeletonfront.width, flipH = false, aboveBG = DrawMode.SpriteAbove, x = 168, y = 224},
+  {sprites = skeleton.spriteIDs, width = skeleton.width, flipH = false, aboveBG = DrawMode.SpriteAbove, x = 72, y = 216},
+  {sprites = skeleton.spriteIDs, width = skeleton.width, flipH = false, aboveBG = DrawMode.SpriteAbove, x = 240, y = 256},
+  {sprites = skeleton.spriteIDs, width = skeleton.width, flipH = false, aboveBG = DrawMode.SpriteAbove, x = 160, y = 168},
+  {sprites = skeleton.spriteIDs, width = skeleton.width, flipH = false, aboveBG = DrawMode.SpriteAbove, x = 168, y = 224},
 }
 
 -- The Init() method is part of the game's lifecycle and called a game starts. We are going to
 -- use this method to configure background color, ScreenBufferChip and draw a text box.
 function Init()
 
-  
+
   -- Get sprite, tilemap and display sizes
   local spriteSize = SpriteSize()
   local tilemapSize = TilemapSize()
@@ -79,6 +71,7 @@ function Init()
 
   scrollX = 0
   scrollY = 0
+
 end
 
 -- The Update() method is part of the game's life cycle. The engine calls Update() on every frame
@@ -161,12 +154,6 @@ function Draw()
   local pos = ScrollPosition()
 
   -- Draw the scroll x and y position to the display
-DrawText("("..string.rpad(tostring(pos.x), 3, "0")..","..string.rpad(tostring(pos.y), 3, "0") ..")", 8, 124, DrawMode.Sprite, "default")
+  DrawText(string.format("(%03d,%03d)", pos.x, pos.y), 8, 124, DrawMode.Sprite, "default")
 
 end
-
-
-
-
-
-

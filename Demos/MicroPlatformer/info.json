@@ -1,1 +1,6 @@
-{"name":"MicroPlatformer","description":"Game description goes here.","ext":".pv8","version":"0.7.2"}
+{
+    "name":"MicroPlatformer",
+    "description":"",
+    "version":"0.7.6",
+    "ext":".pv8",
+}

@@ -183,7 +183,7 @@ function EditorUI:UpdateInputArea(data)
 
     if(self.collisionManager.mouseReleased == true and data.editing == false) then
 
-      print("Click to edit")
+      -- print("Click to edit")
       self:InputAreaMoveCursorToMousePos(data)
 
       -- Enter edit mode

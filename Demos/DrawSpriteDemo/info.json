@@ -1,1 +1,6 @@
-{"name":"DrawSpriteDemo","ext":".pv8","version":"0.7.0","description":"Game description goes here."}
+{
+    "name":"DrawSpriteDemo",
+    "description":"",
+    "version":"0.7.6",
+    "ext":".pv8",
+}

@@ -34,7 +34,7 @@
         "description":"",
         "version":"0.7.6",
         "ext":".pv8",
-        "lockSpecs":false,
+        "lockSpecs":true,
         "maxSize":128,
         "saveSlots":8,
         "savedData":{

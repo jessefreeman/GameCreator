@@ -1,1 +1,6 @@
-{"name":"FamiSystem","ext":".pvs","version":"0.7.0","description":"Game description goes here."}
+{
+    "name":"FamiSystem",
+    "description":"",
+    "version":"0.7.6",
+    "ext":".pvs",
+}
