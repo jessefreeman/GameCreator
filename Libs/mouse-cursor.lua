@@ -125,7 +125,7 @@ function MouseCursor:Draw()
     if(spriteData ~= nil) then
 
       -- Draw the new cursor taking into account the cursors offset
-      DrawSprites(cursorData.spriteData.spriteIDs, self.pos.x + cursorData.offset.x, self.pos.y + cursorData.offset.y, spriteData.width, false, false, DrawMode.Sprite, 0, true, false)
+      DrawSprites(cursorData.spriteData.spriteIDs, self.pos.x + cursorData.offset.x, self.pos.y + cursorData.offset.y, spriteData.width, false, false, DrawMode.SpriteAbove, 0, true, false)
 
     end
 

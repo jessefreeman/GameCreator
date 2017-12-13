@@ -62,7 +62,7 @@ function EditorUI:UpdateButtonSizeFromCache(data)
     data.rect.h = data.tiles.h * self.spriteSize.y
 
     -- Cache the tile draw arguments for rendering
-    data.spriteDrawArgs = {spriteData.spriteIDs, 0, 0, spriteData.width, false, false, DrawMode.Sprite, 0, false, false}
+    data.spriteDrawArgs = {spriteData.spriteIDs, 0, 0, spriteData.width, false, false, DrawMode.SpriteAbove, 0, false, false}
     data.tileDrawArgs = {spriteData.spriteIDs, data.tiles.c, data.tiles.r, spriteData.width, DrawMode.Tile, 0}--{0, 0, spriteData.width, spriteData.spriteIDs, 0, data.flagID}
 
     -- self:SetUIFlags(data.tiles.c, data.tiles.r, data.tiles.w, data.tiles.h, data.flagID)
