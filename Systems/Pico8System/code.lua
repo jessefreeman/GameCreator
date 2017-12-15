@@ -16,6 +16,9 @@ local title = "EMPTY GAME"
 local message = "This is an empty game template. Press Ctrl + 1 to open the editor or modify the files found in your workspace game folder."
 local doc = "Visit bit.ly/PV8GitBook for the docs on how to use PV8."
 
+-- Loads in the pico-8 APIs
+LoadScript("pico-8-shim")
+
 -- The Init() method is part of the game's lifecycle and called a game starts. We are going to
 -- use this method to configure background color, ScreenBufferChip and draw a text box.
 function Init()
@@ -24,13 +27,13 @@ function Init()
 	BackgroundColor(8)
 
 	-- Let's draw the title into the tilemap
-	DrawText(title, 1, 1, DrawMode.Tile, "default", 7)
+	DrawText(title, 8, 8, DrawMode.TilemapCache, "default", 7, - 4)
 
 	-- We are going to render the message in a box as tiles.
-	DrawText(message, 1, 3, DrawMode.Tile, "default", 7, 0, 15)
+	DrawText(message, 8, 23, DrawMode.TilemapCache, "default", 7, - 4)
 
 	-- Finally we'll render the doc url below our message as tiles.
-	-- DrawText(doc, 1, 12, DrawMode.Tile, "default", 7, 0, 15)
+	DrawText(doc, 8, 96, DrawMode.TilemapCache, "default", 7, - 4)
 
 end
 
