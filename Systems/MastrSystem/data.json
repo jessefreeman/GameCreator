@@ -1,55 +1,49 @@
 {
-    "ColorChip":
-    {
-        "pages":1,
-        "colorsPerPage":64,
-        "supportedColors":16,
-        "backgroundColor":0,
-        "transparent":"#FF00FF"
-    },
-    
-    "SpriteChip":{
-        "spriteWidth":8,
-        "spriteHeight":8,
-        "pages":4,
-        "cps":6
-    },
-    "TilemapChip":
-    {
-        "columns":256,
-        "rows":256,
-        "totalFlags":16
-    },
-    "DisplayChip":
-    {
-        "width":256,
-        "height":192,
-        "overscanX":0,
-        "overscanY":0,
-        "maxSpriteCount":64
-    },
-    "GameChip":
-    {
-        "name":"MastrSystem",
-        "description":"",
-        "version":"0.7.6",
-        "ext":".pvs",
-        "lockSpecs":false,
-        "maxSize":256,
-        "saveSlots":8,
-        "savedData":{
-        
-        }
-    },
-    "MusicChip":
-    {
-        "totalTracks":3,
-        "notesPerTrack":127,
-        "totalLoop":16
-    },
-    "SoundChip":
-    {
-        "totalChannels":4,
-        "totalSounds":28,
+  "ColorChip": {
+    "pages": 1,
+    "colorsPerPage": 64,
+    "supportedColors": 16,
+    "backgroundColor": 0,
+    "transparent": "#FF00FF"
+  },
+
+  "SpriteChip": {
+    "spriteWidth": 8,
+    "spriteHeight": 8,
+    "pages": 4,
+    "cps": 6,
+    "maxSpriteCount": 64
+  },
+  "TilemapChip": {
+    "columns": 256,
+    "rows": 256,
+    "totalFlags": 16
+  },
+  "DisplayChip": {
+    "width": 256,
+    "height": 192,
+    "overscanX": 0,
+    "overscanY": 0
+  },
+  "GameChip": {
+    "name": "MastrSystem",
+    "description": "",
+    "version": "0.7.6",
+    "ext": ".pvs",
+    "lockSpecs": false,
+    "maxSize": 256,
+    "saveSlots": 8,
+    "savedData": {
+
     }
+  },
+  "MusicChip": {
+    "totalTracks": 3,
+    "notesPerTrack": 127,
+    "totalLoop": 16
+  },
+  "SoundChip": {
+    "totalChannels": 4,
+    "totalSounds": 28,
+  }
 }

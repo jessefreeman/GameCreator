@@ -1,55 +1,49 @@
 {
-    "ColorChip":
-    {
-        "pages":2,
-        "colorsPerPage":64,
-        "supportedColors":16,
-        "backgroundColor":0,
-        "transparent":"#FF00FF"
-    },
-    
-    "SpriteChip":{
-        "spriteWidth":8,
-        "spriteHeight":8,
-        "pages":3,
-        "cps":8
-    },
-    "TilemapChip":
-    {
-        "columns":128,
-        "rows":128,
-        "totalFlags":16
-    },
-    "DisplayChip":
-    {
-        "width":160,
-        "height":144,
-        "overscanX":0,
-        "overscanY":0,
-        "maxSpriteCount":64
-    },
-    "GameChip":
-    {
-        "name":"GGSystem",
-        "description":"",
-        "version":"0.7.6",
-        "ext":".pvs",
-        "lockSpecs":true,
-        "maxSize":256,
-        "saveSlots":8,
-        "savedData":{
-        
-        }
-    },
-    "MusicChip":
-    {
-        "totalTracks":3,
-        "notesPerTrack":127,
-        "totalLoop":12
-    },
-    "SoundChip":
-    {
-        "totalChannels":4,
-        "totalSounds":16,
+  "ColorChip": {
+    "pages": 2,
+    "colorsPerPage": 64,
+    "supportedColors": 16,
+    "backgroundColor": 0,
+    "transparent": "#FF00FF"
+  },
+
+  "SpriteChip": {
+    "spriteWidth": 8,
+    "spriteHeight": 8,
+    "pages": 3,
+    "cps": 8,
+    "maxSpriteCount": 64
+  },
+  "TilemapChip": {
+    "columns": 128,
+    "rows": 128,
+    "totalFlags": 16
+  },
+  "DisplayChip": {
+    "width": 160,
+    "height": 144,
+    "overscanX": 0,
+    "overscanY": 0
+  },
+  "GameChip": {
+    "name": "GGSystem",
+    "description": "",
+    "version": "0.7.6",
+    "ext": ".pvs",
+    "lockSpecs": true,
+    "maxSize": 256,
+    "saveSlots": 8,
+    "savedData": {
+
     }
+  },
+  "MusicChip": {
+    "totalTracks": 3,
+    "notesPerTrack": 127,
+    "totalLoop": 12
+  },
+  "SoundChip": {
+    "totalChannels": 4,
+    "totalSounds": 16,
+  }
 }
