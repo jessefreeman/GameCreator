@@ -19,6 +19,7 @@ local scrollY = 0
 local speed = 24
 local rightBorder = 0
 local bottomBorder = 0
+local hudHeight = 16
 
 local delay = .5
 local delayTime = .5
@@ -27,15 +28,15 @@ local waveMode = 0
 local direction = {x = 0, y = 0}
 
 local skeletons = {
-  {sprites = skeleton.spriteIDs, width = skeleton.width, flipH = false, aboveBG = DrawMode.SpriteAbove, x = 104, y = 40},
+  {sprites = skeleton.spriteIDs, width = skeleton.width, flipH = false, aboveBG = DrawMode.Sprite, x = 104, y = 40},
   {sprites = skeleton.spriteIDs, width = skeleton.width, flipH = false, aboveBG = DrawMode.SpriteBelow, x = 64, y = 70},
   {sprites = skeleton.spriteIDs, width = skeleton.width, flipH = true, aboveBG = DrawMode.SpriteBelow, x = 120, y = 70},
-  {sprites = skeleton.spriteIDs, width = skeleton.width, flipH = false, aboveBG = DrawMode.SpriteAbove, x = 180, y = 120},
+  {sprites = skeleton.spriteIDs, width = skeleton.width, flipH = false, aboveBG = DrawMode.Sprite, x = 180, y = 120},
 
-  {sprites = skeleton.spriteIDs, width = skeleton.width, flipH = false, aboveBG = DrawMode.SpriteAbove, x = 72, y = 216},
-  {sprites = skeleton.spriteIDs, width = skeleton.width, flipH = false, aboveBG = DrawMode.SpriteAbove, x = 240, y = 256},
-  {sprites = skeleton.spriteIDs, width = skeleton.width, flipH = false, aboveBG = DrawMode.SpriteAbove, x = 160, y = 168},
-  {sprites = skeleton.spriteIDs, width = skeleton.width, flipH = false, aboveBG = DrawMode.SpriteAbove, x = 168, y = 224},
+  {sprites = skeleton.spriteIDs, width = skeleton.width, flipH = false, aboveBG = DrawMode.Sprite, x = 72, y = 216},
+  {sprites = skeleton.spriteIDs, width = skeleton.width, flipH = false, aboveBG = DrawMode.Sprite, x = 240, y = 256},
+  {sprites = skeleton.spriteIDs, width = skeleton.width, flipH = false, aboveBG = DrawMode.Sprite, x = 160, y = 168},
+  {sprites = skeleton.spriteIDs, width = skeleton.width, flipH = false, aboveBG = DrawMode.Sprite, x = 168, y = 224},
 }
 
 -- The Init() method is part of the game's lifecycle and called a game starts. We are going to
@@ -59,15 +60,15 @@ function Init()
 
   local waterTiles = {}
   for i = 1, totalTiles do
-    --TODO need to use modulous to calculate the right tiles?
+    --TODO need to use modulus to calculate the right tiles?
     waterTiles[i] = watertile.spriteIDs[1]
   end
 
   -- Left water
-  UpdateTiles(0, 0, waterColumns, waterTiles, 3)
+  UpdateTiles(0, 3, waterColumns, waterTiles, 3)
 
   -- -- Right Water
-  UpdateTiles(34, 0, waterColumns, waterTiles, 3)
+  UpdateTiles(34, 3, waterColumns, waterTiles, 3)
 
   scrollX = 0
   scrollY = 0
@@ -93,8 +94,8 @@ function Update(timeDelta)
   if(scrollY >= bottomBorder) then
     scrollY = bottomBorder
     direction.y = -1
-  elseif(scrollY <= 0) then
-    scrollY = 0
+  elseif(scrollY <= hudHeight) then
+    scrollY = hudHeight
     direction.y = 1
   end
 
@@ -120,12 +121,15 @@ function Update(timeDelta)
 
   end
 
+
+
 end
 
 -- The Draw() method is part of the game's life cycle. It is called after Update() and is where
 -- all of our draw calls should go. We'll be using this to render sprites to the display.
 function Draw()
 
+  -- Clear()
   -- Change the background color
   BackgroundColor(2)
 
@@ -137,7 +141,10 @@ function Draw()
   ScrollPosition(newScrollX, newScrollY)
 
   -- Redraw the entire display
-  RedrawDisplay()
+  -- RedrawDisplay()
+
+
+  DrawTilemap(0, hudHeight, 20, 15, newScrollX, newScrollY + hudHeight)
 
   -- Draw sprites
 
@@ -154,6 +161,14 @@ function Draw()
   local pos = ScrollPosition()
 
   -- Draw the scroll x and y position to the display
-  DrawText(string.format("(%03d,%03d)", pos.x, pos.y), 8, 124, DrawMode.Sprite, "default")
+  DrawText(string.format("(%03d,%03d)", pos.x, pos.y), 8, 124, DrawMode.SpriteAbove, "default")
+
+  -- Need to rest tiles under tilemap cache to force it to clear correctly and maintain the HUD bg color
+  DrawTiles({17, 17, 17}, 12, 1, 3)
+  DrawTiles({17, 17}, 16, 1, 2)
+  DrawText(ReadTotalSprites(), 12 * 8, 8, DrawMode.TilemapCache, "default")
+  DrawText(ReadFPS(), 16 * 8, 8, DrawMode.TilemapCache, "default")
+
+  DrawTilemap(0, 0, 20, 3, 0, 0, DrawMode.UI)
 
 end
