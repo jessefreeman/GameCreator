@@ -9,7 +9,7 @@
     },
     
     "SpriteChip":{
-        "maxSpriteCount":0"unique":true,
+        "maxSpriteCount":40"unique":true,
         "spriteWidth":8,
         "spriteHeight":8,
         "pages":2,
@@ -36,7 +36,7 @@
         "description":"",
         "version":"0.7.6",
         "ext":".pv8",
-        "lockSpecs":false,
+        "lockSpecs":true,
         "maxSize":128,
         "saveSlots":8,
         "savedData":{

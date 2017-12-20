@@ -28,21 +28,23 @@ local waveMode = 0
 local direction = {x = 0, y = 0}
 
 local skeletons = {
-  {sprites = skeleton.spriteIDs, width = skeleton.width, flipH = false, aboveBG = DrawMode.Sprite, x = 104, y = 40},
-  {sprites = skeleton.spriteIDs, width = skeleton.width, flipH = false, aboveBG = DrawMode.SpriteBelow, x = 64, y = 70},
-  {sprites = skeleton.spriteIDs, width = skeleton.width, flipH = true, aboveBG = DrawMode.SpriteBelow, x = 120, y = 70},
-  {sprites = skeleton.spriteIDs, width = skeleton.width, flipH = false, aboveBG = DrawMode.Sprite, x = 180, y = 120},
+  {sprites = skeleton.spriteIDs, width = skeleton.width, flipH = false, aboveBG = DrawMode.Sprite, x = 104, y = 64},
+  {sprites = skeleton.spriteIDs, width = skeleton.width, flipH = false, aboveBG = DrawMode.SpriteBelow, x = 64, y = 94},
+  {sprites = skeleton.spriteIDs, width = skeleton.width, flipH = true, aboveBG = DrawMode.SpriteBelow, x = 120, y = 94},
+  {sprites = skeleton.spriteIDs, width = skeleton.width, flipH = false, aboveBG = DrawMode.Sprite, x = 180, y = 144},
 
-  {sprites = skeleton.spriteIDs, width = skeleton.width, flipH = false, aboveBG = DrawMode.Sprite, x = 72, y = 216},
-  {sprites = skeleton.spriteIDs, width = skeleton.width, flipH = false, aboveBG = DrawMode.Sprite, x = 240, y = 256},
-  {sprites = skeleton.spriteIDs, width = skeleton.width, flipH = false, aboveBG = DrawMode.Sprite, x = 160, y = 168},
-  {sprites = skeleton.spriteIDs, width = skeleton.width, flipH = false, aboveBG = DrawMode.Sprite, x = 168, y = 224},
+  {sprites = skeleton.spriteIDs, width = skeleton.width, flipH = false, aboveBG = DrawMode.Sprite, x = 72, y = 240},
+  {sprites = skeleton.spriteIDs, width = skeleton.width, flipH = false, aboveBG = DrawMode.Sprite, x = 240, y = 280},
+  {sprites = skeleton.spriteIDs, width = skeleton.width, flipH = false, aboveBG = DrawMode.Sprite, x = 160, y = 192},
+  {sprites = skeleton.spriteIDs, width = skeleton.width, flipH = false, aboveBG = DrawMode.Sprite, x = 168, y = 248},
 }
 
 -- The Init() method is part of the game's lifecycle and called a game starts. We are going to
 -- use this method to configure background color, ScreenBufferChip and draw a text box.
 function Init()
 
+  -- Change the background color
+  BackgroundColor(2)
 
   -- Get sprite, tilemap and display sizes
   local spriteSize = SpriteSize()
@@ -52,6 +54,10 @@ function Init()
   -- Need to get a reference to the right edge of the tilemap
   rightBorder = (tilemapSize.x * spriteSize.x) - displaySize.x;
   bottomBorder = (tilemapSize.y * spriteSize.y) - displaySize.y;
+
+  -- Get the current visual bounds and modify for the new HUD
+  bounds = VisibleBounds()
+  bounds.y = 8
 
   -- Setup water tiles before rendering map
   local waterColumns = 6
@@ -129,13 +135,12 @@ end
 -- all of our draw calls should go. We'll be using this to render sprites to the display.
 function Draw()
 
-  -- Clear()
-  -- Change the background color
-  BackgroundColor(2)
+  Clear()
+
 
   -- Convert the scrollX value into a whole number
-  newScrollX = math.ceil(scrollX)
-  newScrollY = math.ceil(scrollY)
+  newScrollX = math.floor(scrollX)
+  newScrollY = math.floor(scrollY)
 
   -- scroll the tilemap map down below the HUD which is 16 pixels hight. Also apply the new scrollX value
   ScrollPosition(newScrollX, newScrollY)
@@ -152,10 +157,10 @@ function Draw()
 
   for i = 1, total do
     local skeleton = skeletons[i]
-    DrawSprites(skeleton.sprites, skeleton.x, skeleton.y, skeleton.width, skeleton.flipH, false, skeleton.aboveBG)
+    DrawSprites(skeleton.sprites, skeleton.x, skeleton.y, skeleton.width, skeleton.flipH, false, skeleton.aboveBG, 0, true, true, bounds)
   end
 
-  DrawSprites(chest.spriteIDs, 168, 72, chest.width)
+  DrawSprites(chest.spriteIDs, 168, 72 + 32, chest.width, false, false, DrawMode.Sprite, 0, true, true, bounds)
 
   -- Read the current scroll position from the display
   local pos = ScrollPosition()
@@ -166,9 +171,12 @@ function Draw()
   -- Need to rest tiles under tilemap cache to force it to clear correctly and maintain the HUD bg color
   DrawTiles({17, 17, 17}, 12, 1, 3)
   DrawTiles({17, 17}, 16, 1, 2)
+
+  -- Draw new text on top of the tilemap data cache so we can maintain the transparency
   DrawText(ReadTotalSprites(), 12 * 8, 8, DrawMode.TilemapCache, "default")
   DrawText(ReadFPS(), 16 * 8, 8, DrawMode.TilemapCache, "default")
 
+  -- Draw the HUD layer after we update the tilemap
   DrawTilemap(0, 0, 20, 3, 0, 0, DrawMode.UI)
 
 end

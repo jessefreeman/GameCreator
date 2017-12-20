@@ -12,6 +12,13 @@
 	Learn more about making Pixel Vision 8 games at https://www.gitbook.com/@pixelvision8
 ]]--
 
+
+
+
+-- Need to loop through the tilemap and build a look up table for sprite flags
+
+
+
 -- save a reference to the native lua print function
 _print = print
 
@@ -37,20 +44,8 @@ end
 
 function spr(n, x, y, w, h, flip_x, flip_y)
 
-  -- TODO need to convert w,h into an array and use draw sprites
+  DrawSpriteBlock(n, x, y, w, h, flip_x, flip_y)
 
-  local sprites = {}
-
-  local total = w * h
-
-  for i = 1, total do
-
-    table.insert(sprites, (i - 1) + n)
-
-  end
-
-  -- DrawSprite(n, x, y, flip_x == 0 and false or true, flip_x == 0 and false or true)
-  DrawSprites(sprites, x, y, w, flip_x == 0 and false or true, flip_x == 0 and false or true, DrawMode.Sprite, 0, false, false)
 end
 
 function sset(x, y, c)
@@ -252,7 +247,18 @@ function stat(n)
   elseif(n == 33) then
     return MousePosition().y
   elseif(n == 34) then
-    -- TODO need to remap to the correct mouse button flag
+    local val = 0
+
+    if(MouseButton(0)) then
+      val +  = 1
+    end
+
+    if(MouseButton(1))then
+      val +  = 2
+    end
+
+    return val
+  else
     return 0
   end
 end
@@ -324,6 +330,7 @@ end
 
 function rectfill(x0, y0, x1, y1, col)
   -- Has not been implemented
+  DrawRect(x0, y0, x1 - x0, y1 - y0, col)
 end
 
 function sget(x, y)
