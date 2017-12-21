@@ -17,22 +17,12 @@
 function EditorUI:CreateText(rect, text, font, colorOffset, spacing, drawMode)
 
   local data = self:CreateData(-1, rect)
-
+  data.text = ""
   data.font = font or "default"
   data.colorOffset = colorOffset or 0
   data.spacing = spacing or 0
   data.drawMode = DrawMode.TilemapCache
-
-  data.drawArguments = {
-    "", -- text (1)
-    data.rect.x, -- x (2)
-    data.rect.y, -- y (3)
-    data.drawMode, -- drawMode (4)
-    data.font, -- font (5)
-    data.colorOffset, -- colorOffset (6)
-    data.spacing, -- spacing (7)
-    data.tiles.w -- width (8)
-  }
+  data.charSize = SpriteSize()
 
   -- After the component's data is set, update the text
   self:ChangeText(data, text)
@@ -48,10 +38,27 @@ function EditorUI:UpdateText(data)
     return
   end
 
+  local drawArguments = nil
   -- Test to see if we should draw the component
   if(data.invalid == true or DrawMode.Sprite == true) then
-    -- Push a draw call into the UI's draw queue
-    self:NewDraw("DrawText", data.drawArguments)
+
+    -- We want to render the text from the bottom of the screen so we offset it and loop backwards.
+    for i = 1, data.totalLines do
+
+      drawArguments = {
+        data.lines[i], -- text (1)
+        data.rect.x, -- x (2)
+        data.drawMode == DrawMode.Tile and data.tiles.r + (i - 1) or data.rect.y + ((i - 1) * data.charSize.y), -- y (3)
+        data.drawMode, -- drawMode (4)
+        data.font, -- font (5)
+        data.colorOffset, -- colorOffset (6)
+        data.spacing, -- spacing (7)
+      }
+
+      -- Push a draw call into the UI's draw queue
+      self:NewDraw("DrawText", drawArguments)
+
+    end
 
     if(data.invalid == true) then
       -- We only want to reset the validation if it's invalid since sprite text will keep drawing
@@ -65,22 +72,19 @@ end
 function EditorUI:ChangeText(data, text)
 
   -- If the text is the same, don't update the text component and exit out of the method
-  if(data.drawArguments[1] == text) then
+  if(data.text == text) then
     return
   end
 
   self:Invalidate(data)
 
   -- Save the text on the draw arguments
-  data.drawArguments[1] = text
+  data.text = text
 
-  -- Make sure we have the correct position for the draw
-  if(data.drawMode == DrawMode.Tile) then
-    data.drawArguments[2] = data.tiles.c
-    data.drawArguments[3] = data.tiles.r
-  else
-    data.drawArguments[2] = data.rect.x
-    data.drawArguments[3] = data.rect.y
-  end
+  -- We are going to render the message in a box as tiles. To do this, we need to wrap the
+  -- text, then split it into lines and draw each line.
+  local wrap = WordWrap(data.text, data.tiles.w)
+  data.lines = SplitLines(wrap)
+  data.totalLines = #data.lines
 
 end

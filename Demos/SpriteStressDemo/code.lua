@@ -37,7 +37,6 @@ function Init()
 	width = displaySize.x
 	height = displaySize.y
 	totalColors = TotalColors()
-	DrawText("FPS ", 4, 4, DrawMode.UI, "large-font")
 end
 
 -- The Update() method is part of the game's life cycle. The engine calls Update() on every frame before
@@ -72,10 +71,6 @@ function Draw()
 	-- we can directly clear the DisplayChip by calling the Clear() method.
 	Clear()
 
-	-- Let's draw the FPS chars first since they will always be displayed. Any additional sprites over
-	-- the max sprite count will simply be ignore.
-	DrawText(ReadFPS(), 36, 4, DrawMode.Sprite, "large-font")
-
 	-- This loop will create a random x and y value based on the display's dimension then attempt to
 	-- draw a sprite. Since we are drawing more sprites to the display than it can handle, it will
 	-- not display any additional sprites over the max sprite count. This loop does add overhead so
@@ -85,5 +80,9 @@ function Draw()
 		y = math.random(0, height)
 		DrawSprite( i + 12, x, y)
 	end
+
+	-- Let's draw the FPS chars first since they will always be displayed. Any additional sprites over
+	-- the max sprite count will simply be ignore.
+	DrawText("SPRITES " .. ReadTotalSprites() .. " FPS " .. ReadFPS(), 4, 4, DrawMode.UI, "large-font")
 
 end

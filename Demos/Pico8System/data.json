@@ -11,7 +11,8 @@
     "spriteWidth": 8,
     "spriteHeight": 8,
     "pages": 1,
-    "cps": 16
+    "cps": 16,
+    "unique": false
   },
   "TilemapChip": {
     "columns": 128,

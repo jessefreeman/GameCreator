@@ -1,13 +1,13 @@
---  
--- Copyright (c) 2017, Jesse Freeman. All rights reserved.  
--- 
--- Licensed under the Microsoft Public License (MS-PL) License. 
--- See LICENSE file in the project root for full license information. 
--- 
+--
+-- Copyright (c) 2017, Jesse Freeman. All rights reserved.
+--
+-- Licensed under the Microsoft Public License (MS-PL) License.
+-- See LICENSE file in the project root for full license information.
+--
 -- Contributors
 -- --------------------------------------------------------
 -- This is the official list of Pixel Vision 8 contributors:
---  
+--
 -- Jesse Freeman - @JesseFreeman
 -- Christer Kaitila - @McFunkypants
 -- Pedro Medeiros - @saint11
@@ -40,8 +40,8 @@ function Init()
 	BackgroundColor(32)
 
 	-- Pixel Vision 8 limits the number of sprites it can render to the display on each frame. This value is
-	-- set to 64 by default. Since each font character is a single sprite it would be too expensive to draw 
-	-- significant amounts of text at once. To get around this limitation, we are going to render the font 
+	-- set to 64 by default. Since each font character is a single sprite it would be too expensive to draw
+	-- significant amounts of text at once. To get around this limitation, we are going to render the font
 	-- characters into the ScreenBufferChip which manages the background layer.
 
 	DrawText("Font API Demo", 1, 1, DrawMode.Tile, "large-font", Blue)
@@ -50,34 +50,34 @@ function Init()
 	-- This will display the title for the first demo. When calling DrawFontToBuffer you'll need to pass in
 	-- the text to render, an X and Y position as well as the font name and finally the letter spacing.
 	--DrawText("Font Template (Large/Small)", 1, 3, DrawMode.Tile, "large-font", Blue)
-	
-	DrawText("large-font\nSpacing 0", 1, 4, DrawMode.Tile, "large-font", Orange)
+
+	DrawTextBox("large-font Spacing 0", 1, 4, 10, "large-font", Orange)
 
 	-- Now we can loop through each of the supported characters and display them in the ScreenBufferChip.
-	local lines = DrawText(characters, 1, 6, DrawMode.Tile, "large-font", White, 0, wrapWidth)
+	local lines = DrawTextBox(characters, 1, 6, wrapWidth, "large-font", White, 0)
 
-	DrawText("small-font\nSpacing -4", 16, 4, DrawMode.Tile, "large-font", Orange)
+	DrawTextBox("small-font Spacing -4", 16, 4, 10, "large-font", Orange)
 
 	-- This will draw the same set of characters using a font that is smaller. Here we are going to change the
 	-- letter spacing to make the font look better. When drawing to TilemapCache mode the pixel data for the
 	-- characters is copied over the tilemap's cache. If you clear the cache you will lose the text.
-	DrawText(characters, (wrapWidth + 4) * 8, 48, DrawMode.TilemapCache, "small-font", White, -4, wrapWidth)
+	DrawTextBox(characters, (wrapWidth + 4) * 8, 48, wrapWidth, "small-font", White, -4, DrawMode.TilemapCache)
 
-	local offsetY = lines + 6
+	local offsetY = lines + 7
 
 	-- Here we are going to draw the second font into the ScreenBufferChip. We'll change the letter space
 	-- value to -4 since each character is 5 x 4 pixels instead of the default 8 x 8 pixels.
 	DrawText("Long Text - No Wrap", 1, offsetY, DrawMode.Tile, "large-font", Orange)
 	DrawText(longText, 1, offsetY + 2, DrawMode.Tile, "large-font", White)
-	
+
 	DrawText("Long Text - Wrap", 1, offsetY + 4, DrawMode.Tile, "large-font", Orange)
 
 	-- By default, the engine treats each character as an 8x8 sprite. When working with fonts that are smaller
-	-- than this size, you can change the offset to combine characters into more optimized sprite groups. 
-	
+	-- than this size, you can change the offset to combine characters into more optimized sprite groups.
+
 	-- Again we are going to draw all of the supported characters for the new font.
 	--for i=1,#characters do
-	DrawText(longText, 1, offsetY + 6, DrawMode.Tile, "large-font", White, 0, 30)
+	DrawTextBox(longText, 1, offsetY + 6, 30, "large-font", White)
 	--end
 
 end
@@ -94,11 +94,11 @@ function Update(timeDelta)
 
 	-- If the counter is greater than the delay we need to cycle to the next color.
 	if(counter > delay) then
-		
+
 		-- Reset the counter and increment the colorOffset
 		counter = 0
 		colorOffset = colorOffset + 1
-		
+
 		-- We want to skip black since it is not going to show up correctly on the background.
 		if(colorOffset == Black) then
 			colorOffset = colorOffset + 1
@@ -117,15 +117,34 @@ end
 -- is where all of our draw calls should go. We'll be using this to render font characters to the display.
 function Draw()
 
-	-- We can use the RedrawDisplay() method to clear the screen and redraw the tilemap in a 
+	-- We can use the RedrawDisplay() method to clear the screen and redraw the tilemap in a
 	-- single call.
 	RedrawDisplay()
 
-	-- For dynamic text, such as the time value we are tracking, it will be too expensive to update the 
+	-- For dynamic text, such as the time value we are tracking, it will be too expensive to update the
 	-- ScreenBufferChip on each frame. So, in this case, we are going to display the font characters as sprites.
-	DrawText("Dynamic Text ".. time , 8, 28 * 8, DrawMode.Sprite, "large-font", colorOffset)
+	DrawText("Dynamic Text ".. time, 8, 28 * 8, DrawMode.Sprite, "large-font", colorOffset)
 
-	-- If you leave the demo running for long enough, eventually characters will start to disappear when the 
-    -- DisplayChip hits the sprite limit. Rendering dynamic text in a game is very expensive and should be avoided as much as possible.
+	-- If you leave the demo running for long enough, eventually characters will start to disappear when the
+	-- DisplayChip hits the sprite limit. Rendering dynamic text in a game is very expensive and should be avoided as much as possible.
+
+end
+
+function DrawTextBox(text, x, y, width, font, colorOffset, spacing, drawMode)
+
+	drawMode = drawMode or DrawMode.Tile
+	spacing = spacing or 0
+	colorOffset = colorOffset or 0
+	local lineHeight = drawMode == DrawMode.TilemapCache and 8 or 1
+
+	local wrap = WordWrap(text, width, "")
+	local lines = SplitLines(wrap)
+	local total = #lines
+
+	for i = 1, total do
+		DrawText(lines[i], x, y + ((i - 1) * lineHeight), drawMode, font, colorOffset, spacing)
+	end
+
+	return total
 
 end

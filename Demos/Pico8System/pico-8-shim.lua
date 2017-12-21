@@ -27,6 +27,7 @@ function print( str, x, y, col )
   if(x == nil) then
     _print(str)
   else
+    col = col or 7
     DrawText(str, x, y, DrawMode.UI, "default", col, - 4)
   end
 
@@ -43,9 +44,7 @@ function cls()
 end
 
 function spr(n, x, y, w, h, flip_x, flip_y)
-
   DrawSpriteBlock(n, x, y, w, h, flip_x, flip_y)
-
 end
 
 function sset(x, y, c)

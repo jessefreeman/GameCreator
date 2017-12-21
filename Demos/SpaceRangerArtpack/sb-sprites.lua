@@ -15,7 +15,7 @@ block={width=2,unique=4,total=4,spriteIDs={506,507,528,529}}
 boiler={width=4,unique=32,total=32,spriteIDs={170,171,172,173,187,188,189,190,206,207,208,209,236,237,238,239,264,237,238,265,288,289,290,291,314,315,316,317,335,336,337,338}}
 columnbottom={width=3,unique=3,total=3,spriteIDs={467,468,469}}
 columntop={width=3,unique=3,total=3,spriteIDs={491,492,493}}
-columntorch={width=4,unique=8,total=8,spriteIDs={475,476,477,478,499,500,501,502}}
+columntorch={width=4,unique=7,total=8,spriteIDs={475,-1,477,478,499,500,501,502}}
 column={width=3,unique=6,total=6,spriteIDs={467,468,469,491,492,493}}
 debris1={width=2,unique=4,total=4,spriteIDs={508,509,530,531}}
 debris2={width=2,unique=4,total=4,spriteIDs={510,511,532,533}}
@@ -47,10 +47,10 @@ rock={width=2,unique=4,total=4,spriteIDs={615,616,637,638}}
 sky1star={width=2,unique=4,total=4,spriteIDs={14,14,653,14}}
 sky4star={width=2,unique=4,total=4,spriteIDs={635,636,654,655}}
 skyclouds={width=6,unique=54,total=54,spriteIDs={14,14,14,14,14,14,14,36,37,38,39,14,63,64,65,65,66,67,86,87,88,89,65,90,114,115,116,117,118,119,141,142,143,144,145,146,162,163,164,165,166,167,9,180,181,182,183,184,9,9,203,9,9,9}}
-spikes={width=2,unique=4,total=4,spriteIDs={647,648,658,659}}
+spikes={width=2,unique=4,total=4,spriteIDs={647,648,664,665}}
 stalactitesbig={width=2,unique=8,total=8,spriteIDs={168,169,185,186,204,205,234,235}}
-stalactitessmall={width=2,unique=4,total=4,spriteIDs={649,650,660,661}}
-switch={width=2,unique=4,total=4,spriteIDs={651,652,662,663}}
+stalactitessmall={width=2,unique=4,total=4,spriteIDs={649,650,666,667}}
+switch={width=2,unique=4,total=4,spriteIDs={651,652,668,669}}
 tree={width=8,unique=64,total=64,spriteIDs={9,9,10,11,12,13,9,9,9,31,32,33,34,35,9,9,56,57,58,59,60,61,62,9,79,80,81,82,83,84,85,9,107,108,109,110,111,112,113,9,137,9,138,139,140,9,9,9,9,9,158,159,160,161,9,9,9,9,176,177,178,179,9,9}}
 water1={width=2,unique=4,total=4,spriteIDs={617,618,639,640}}
 water2={width=2,unique=4,total=4,spriteIDs={619,620,641,642}}
@@ -66,7 +66,7 @@ enemydeath5={width=4,unique=12,total=16,spriteIDs={300,301,302,303,323,-1,-1,324
 hudbaractive={width=0,unique=0,total=0,spriteIDs={}}
 hudbar={width=4,unique=4,total=4,spriteIDs={512,513,513,514}}
 shooting1={width=2,unique=4,total=4,spriteIDs={625,626,645,646}}
-shooting2={width=2,unique=4,total=4,spriteIDs={643,644,656,657}}
+shooting2={width=2,unique=4,total=4,spriteIDs={643,644,662,663}}
 shootinghit1={width=1,unique=1,total=1,spriteIDs={454}}
 shootinghit2={width=1,unique=1,total=1,spriteIDs={479}}
 shootinghit3={width=2,unique=4,total=4,spriteIDs={607,608,629,630}}
@@ -89,4 +89,10 @@ walkshooting2={width=4,unique=12,total=16,spriteIDs={-1,362,363,-1,191,389,390,4
 walkshooting3={width=4,unique=11,total=16,spriteIDs={-1,195,406,-1,-1,444,470,471,-1,456,494,495,448,480,481,-1}}
 walkshooting4={width=4,unique=12,total=16,spriteIDs={-1,362,363,-1,191,389,390,418,429,430,436,437,-1,446,447,-1}}
 -- spritelib-end
+
+
+
+
+
+
 

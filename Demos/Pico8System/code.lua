@@ -1,23 +1,21 @@
 --[[
-	Pixel Vision 8 - New Template Script
-	Copyright (C) 2017, Pixel Vision 8 (http://pixelvision8.com)
-	Created by Jesse Freeman (@jessefreeman)
+  Pixel Vision 8 - New Template Script
+  Copyright (C) 2017, Pixel Vision 8 (http://pixelvision8.com)
+  Created by Jesse Freeman (@jessefreeman)
 
-	This project was designed to display some basic instructions when you create
-	a new game.	Simply delete the following code and implement your own Init(),
-	Update() and Draw() logic.
+  This project was designed to display some basic instructions when you create
+  a new game.  Simply delete the following code and implement your own Init(),
+  Update() and Draw() logic.
 
-	Learn more about making Pixel Vision 8 games at https://www.gitbook.com/@pixelvision8
+  Learn more about making Pixel Vision 8 games at https://www.gitbook.com/@pixelvision8
 ]]--
-
--- This this is an empty game, we will the following text. We combined two sets of fonts into
--- the default.font.png. Use uppercase for larger characters and lowercase for a smaller one.
-local title = "EMPTY GAME"
-local message = "This is an empty game template. Press Ctrl + 1 to open the editor or modify the files found in your workspace game folder."
-local doc = "Visit bit.ly/PV8GitBook for the docs on how to use PV8."
 
 -- Loads in the pico-8 APIs
 LoadScript("pico-8-shim")
+
+-- This this is an empty game, we will the following text. We combined two sets of fonts into
+-- the default.font.png. Use uppercase for larger characters and lowercase for a smaller one.
+local message = "EMPTY GAME\n\nThis is an empty game template. Press Ctrl + 1 to open the editor or modify the files found in your workspace game folder.\n\nVisit 'bit.ly/PV8GitBook' for the docs on how to use PV8."
 
 -- The Init() method is part of the game's lifecycle and called a game starts. We are going to
 -- use this method to configure background color, ScreenBufferChip and draw a text box.
@@ -26,14 +24,19 @@ function Init()
 	-- Here we are manually changing the background color
 	BackgroundColor(8)
 
-	-- Let's draw the title into the tilemap
-	DrawText(title, 8, 8, DrawMode.TilemapCache, "default", 7, - 4)
+	local display = DisplaySize()
 
-	-- We are going to render the message in a box as tiles.
-	DrawText(message, 8, 23, DrawMode.TilemapCache, "default", 7, - 4)
+	-- We are going to render the message in a box as tiles. To do this, we need to wrap the
+	-- text, then split it into lines and draw each line.
+	local wrap = WordWrap(message:lower(), ((display.x / 8) * 2) - 2)
+	local lines = SplitLines(wrap)
+	local total = #lines
+	local startY = display.y - (total * 8)
 
-	-- Finally we'll render the doc url below our message as tiles.
-	DrawText(doc, 8, 96, DrawMode.TilemapCache, "default", 7, - 4)
+	-- We want to render the text from the bottom of the screen so we offset it and loop backwards.
+	for i = total, 1, - 1 do
+		DrawText(lines[i], 4, startY + ((i - 1) * 8), DrawMode.TilemapCache, "default", 7, - 4)
+	end
 
 end
 
