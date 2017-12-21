@@ -13,7 +13,8 @@
     "spriteWidth": 8,
     "spriteHeight": 8,
     "pages": 4,
-    "cps": 3
+    "cps": 3,
+    "maxSpriteCount": 64
   },
   "TilemapChip": {
     "columns": 256,
