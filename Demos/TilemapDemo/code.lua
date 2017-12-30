@@ -56,7 +56,7 @@ function Init()
   bottomBorder = (tilemapSize.y * spriteSize.y) - displaySize.y;
 
   -- Get the current visual bounds and modify for the new HUD
-  bounds = NewRect(0, 8, displaySize.x, displaySize.y)
+  bounds = NewRect(-8, - 8, displaySize.x, displaySize.y)
   -- bounds.y = 8
 
   -- Setup water tiles before rendering map
