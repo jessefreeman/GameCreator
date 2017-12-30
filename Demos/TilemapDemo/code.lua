@@ -49,15 +49,15 @@ function Init()
   -- Get sprite, tilemap and display sizes
   local spriteSize = SpriteSize()
   local tilemapSize = TilemapSize()
-  local displaySize = DisplaySize()
+  local displaySize = Display()
 
   -- Need to get a reference to the right edge of the tilemap
   rightBorder = (tilemapSize.x * spriteSize.x) - displaySize.x;
   bottomBorder = (tilemapSize.y * spriteSize.y) - displaySize.y;
 
   -- Get the current visual bounds and modify for the new HUD
-  bounds = VisibleBounds()
-  bounds.y = 8
+  bounds = NewRect(0, 8, displaySize.x, displaySize.y)
+  -- bounds.y = 8
 
   -- Setup water tiles before rendering map
   local waterColumns = 6
@@ -137,17 +137,12 @@ function Draw()
 
   Clear()
 
-
   -- Convert the scrollX value into a whole number
   newScrollX = math.floor(scrollX)
   newScrollY = math.floor(scrollY)
 
   -- scroll the tilemap map down below the HUD which is 16 pixels hight. Also apply the new scrollX value
   ScrollPosition(newScrollX, newScrollY)
-
-  -- Redraw the entire display
-  -- RedrawDisplay()
-
 
   DrawTilemap(0, hudHeight, 20, 15, newScrollX, newScrollY + hudHeight)
 

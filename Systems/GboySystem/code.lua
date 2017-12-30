@@ -21,7 +21,7 @@ function Init()
 	-- Here we are manually changing the background color
 	BackgroundColor(0)
 
-	local display = DisplaySize()
+	local display = Display()
 
 	-- We are going to render the message in a box as tiles. To do this, we need to wrap the
 	-- text, then split it into lines and draw each line.

@@ -33,7 +33,7 @@ local newFPS = 0
 
 function Init()
 	-- It's best to define these outside of the for loop since we only need to set the value once.
-	local displaySize = DisplaySize()
+	local displaySize = Display()
 	width = displaySize.x
 	height = displaySize.y
 	totalColors = TotalColors()
