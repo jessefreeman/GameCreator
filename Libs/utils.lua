@@ -38,24 +38,36 @@ string.trunc = function(str, len, char)
   return str
 end
 
+string.split = function(string, delimiter)
+  if delimiter == nil then
+    delimiter = "%s"
+  end
+  local t = {} ; i = 1
+for str in string.gmatch(string, "([^"..delimiter.."]+)") do
+  t[i] = str
+  i = i + 1
+end
+return t
+end
+
 function math.round(num, numDecimalPlaces)
-  local mult = 10^(numDecimalPlaces or 0)
-  return math.floor(num * mult + 0.5) / mult
+local mult = 10^(numDecimalPlaces or 0)
+return math.floor(num * mult + 0.5) / mult
 end
 
 function math.index(x, y, width)
-  return x + y * width
+return x + y * width
 end
 
 function math.pos(index, width)
-  return index % width, math.floor(index / width)
+return index % width, math.floor(index / width)
 end
 
 function table.find(f, l) -- find element v of l satisfying f(v)
-  for _, v in ipairs(l) do
-    if f(v) then
-      return v
-    end
+for _, v in ipairs(l) do
+  if f(v) then
+    return v
   end
-  return nil
+end
+return nil
 end
