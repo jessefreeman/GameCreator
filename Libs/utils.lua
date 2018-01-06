@@ -14,6 +14,14 @@
 -- Shawn Rakowski - @shwany
 --
 
+string.starts = function(String, Start)
+  return string.sub(String, 1, string.len(Start)) == Start
+end
+
+string.ends = function(String, End)
+  return End == '' or string.sub(String, - string.len(End)) == End
+end
+
 table.clone = function(src)
   return {table.unpack(src)}
 end
