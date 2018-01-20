@@ -10,7 +10,7 @@ The tool is broken down into 4 main areas. The first area focuses on selecting s
 
 You can use the left and right arrows to navigate the SFX IDs or enter an ID by hand to load a sound effect. Each sound can have a label which is there to help make organizing sound effects easier in the tool. The engine does not use the label; sound effects accessible by their ID in code.
 
-The next area is the Sound Chip settings fields. These focus on the total number of sound effects the game can store and how many channels are available to play back sounds..
+The Sound Chip relies on two values from the Chip Editor, the total number of sound effect and the number of channels to play them back on. You can modify this in the 
 
 ![image alt text](images/SFXTool_image_2.png)
 
@@ -36,11 +36,9 @@ Here is what each button does:
 
 6. Mutate - Randomize the current SFX properties.
 
-7. Sounds - Select from a list of sound effect templates.
+7. Sounds - Select from a list of sound effect and instrument templates.
 
-8. Instruments - Select from a list of instrument templates.
-
-9. Settings - manually alter a SFX’s properties.
+8. Settings - manually alter a SFX’s properties.
 
 While most of these buttons are straightforward to use, the last 3 buttons change the SFX Editor functionality. These buttons toggle between the Sound/Instrument templates and editing the currently loaded sound effect's settings.
 
@@ -66,7 +64,7 @@ There are 8 sound effect templates:
 
 * Create a completely random sound effect.
 
-Switching to the music button changes the templates to create musical instruments more suited to use with the Music Tool.
+On the second page there are templates to create musical instruments more suited to use with the Music Tool.
 
 ![image alt text](images/SFXTool_image_5.png)
 

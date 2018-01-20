@@ -12,7 +12,7 @@ Once you have created this folder, a new button appears at the bottom of the Spr
 
 The Sprite Builder folder allows you to store large sprites and import them into your game. The Sprite Builder tool looks at the makeup of each png inside of the folder and attempts to match every 8 x 8 block of pixels to an existing sprite. The results are converted into Lua tables and injected into your `code.lua` file. Let's take a look at how this works.
 
-Here we have a collection of sprites that make up all of the artwork for our game. 
+Here we have a collection of sprites that make up all of the artwork for our game.
 
 ![image alt text](images/TheSpriteBuilder_image_2.png)
 

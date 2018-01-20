@@ -1,14 +1,14 @@
 # Clearing The Display
 
-When you create a new project without any code in it, the display simply shows the background color. This default color is magenta (#FF00FF). This color is displayed whenever a color value is out of range.
+When you create a new project without any code in it, the display simply shows the background color. This default color is 0 which is the first color in the Color Chip. If the color is out of range, magenta (#FF00FF) will be shown in its place.
 
 ![image alt text](images/ClearingTheDisplay_image_0.png)
 
-Since the background color is set to -1 by default, you are not able to display much else. You can always override the default background color in the Tilemap Tool.
+You can always override the default background by calling `BackgroundColor(colorID)` in your code or by changing it in the Chip Editor.
 
 ![image alt text](images/ClearingTheDisplay_image_1.png)
 
-Now if you refresh the game, you can see the new color. However, it is important to note that the display is not rendering anything new. You have to tell the renderer it needs to display pixel data. The easiest way to do this is by calling `Clear()`.
+Now if you refresh the game, you can see the new color. In order to see the background color, you’ll need to tell the renderer to clear the screen. The easiest way to do this is by calling `Clear()`at the beginning of your game’s `Draw()` method.
 
 ![image alt text](images/ClearingTheDisplay_image_2.png)
 

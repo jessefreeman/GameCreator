@@ -1,25 +1,35 @@
 # Creating A New Game
 
-When you load up Game Creator for the first time, you are taken directly to the New Game Tool.  
+When you load up Game Creator for the first time, you are taken directly to the Workspace Explorer Tool. From here, there are two ways to create a new game. The first is to open up the Workspace/Systems directory.
 
 ![image alt text](images/CreatingANewGame_image_0.png)
 
-You can create an empty game project by clicking on the new game button at the bottom of the screen. 
+From here, you can select any built-in system template you’d like to start a new game from by clicking on the template name and hitting New Game.
 
 ![image alt text](images/CreatingANewGame_image_1.png)
 
-Once pressed, the Game Creator copies the default system template over to the Game folder. When the Game folder is ready, Game Creator automatically switches back over to play mode presenting you with a new game file and some instructions on how to edit it.
+This will copy the contents of the system template into your Workspace/Sandbox folder and you can begin working on your game.
 
 ![image alt text](images/CreatingANewGame_image_2.png)
 
-At this point, you are ready to start coding your game. If for some reason there was a problem loading a game, the Game Creator shows an error with instructions on what to do to fix the problem. 
+The second way to create a new game is to use the built in New Game Tool. The New Game Tool is located in the Workspace/Tools directory. This tool allows you to preview the specs of each of the core system templates and delete an existing game in the Sandbox folder to start from scratch.
 
 ![image alt text](images/CreatingANewGame_image_3.png)
+
+You can create an empty game project by clicking on the new game button at the bottom of the screen. 
+
+![image alt text](images/CreatingANewGame_image_4.png)
+
+Once pressed, the Game Creator copies the default system template over to the Game folder. When the Game folder is ready, Game Creator automatically switches back over to play mode presenting you with a new game file and some instructions on how to edit it.
+
+![image alt text](images/CreatingANewGame_image_5.png)
+
+At this point, you are ready to start coding your game. If for some reason there was a problem loading a game, the Game Creator shows an error with instructions on what to do to fix the problem. 
+
+![image alt text](images/CreatingANewGame_image_6.png)
 
 You can always switch back to edit mode by pressing `Ctrl + 1`. By default, the New Project Tool should automatically load.
 
 Before you create a new game, you must decide which system template you want to use.
-
-.
 
 

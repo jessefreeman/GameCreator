@@ -1,6 +1,6 @@
 # Changing the Workspace Path
 
-In addition to using Game Creator’s Settings Tool, you can manually override the default system path by hand. Sometimes it is useful to change this if Pixel Vision 8 fails to load manually or the file becomes corrupted. The Game Creator stores the workspace path inside of the `bios.json`, at the root of the default, save location on your computer.
+In addition to using Game Creator’s Workspace Explorer Tool, you can manually override the default system path by hand. Sometimes it is useful to change this if Pixel Vision 8 fails to load manually or the file becomes corrupted. The Game Creator stores the workspace path inside of the `bios.json`, at the root of the default, save location on your computer.
 
 ![image alt text](images/ChangingTheWorkspacePath_image_0.png)
 

@@ -104,4 +104,14 @@ Here is a breakdown of each property:
 </table>
 
 
+After you’re game is created, you can open up the Chip Editor to make more granular changes. Simply navigate to the Workspace/Sandbox folder in the Workspace Explorer Tool and double click on the data.json file.
+
+![image alt text](images/SystemTemplates_image_1.png)
+
+Once opened you’ll have access to all of the high level chip values allowing you to customize things to your liking.
+
+![image alt text](images/SystemTemplates_image_2.png)
+
+Once you are done changing the chip values, don’t forget to hit save to write the changes back to the data.json file.
+
 

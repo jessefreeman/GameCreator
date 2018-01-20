@@ -12,7 +12,7 @@ Simply right click on the version for your system, and set its permissions to ru
 
 ![image alt text](images/LaunchingTheGameCreator_image_2.png).
 
-By default, Pixel Vision 8 runs in window mode. You can resize the window to fit your needs. A full-screen toggle is planned for a future release. 
+By default, the Game Creator runs in window mode. You can scale the window to fit your needs in the settings menu after the Game Creator loads up. Likewise, you can also run the Game Creator in full-screen mode too.
 
 ![image alt text](images/LaunchingTheGameCreator_image_3.png)
 

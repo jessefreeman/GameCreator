@@ -44,7 +44,7 @@ The `tilemap-flags.png` represents tile collision data. Each tile can be assigne
 
 The best way to create a collision mask is to overlay the flag colors on the tile map and export them without the tiles in the background so they match up:
 
-![image alt text](images/ParsingTileMapFlags_image_0.png)![image alt text](images/ParsingTileMapFlags_image_1.png)
+![image alt text](images/ParsingTileMapFlags_image_0.png)
 
 It’s important to note that the `tile-map.png` needs to match the exact dimensions of the `tilemap.png` or they will not work.
 

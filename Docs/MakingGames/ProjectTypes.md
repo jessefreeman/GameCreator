@@ -1,6 +1,6 @@
 # Project Types
 
-Pixel Vision 8 games are zip files with a custom extension. Each extension type tells the engine how to handle it. The extension simply tells PV8 how to load the file and unzip it. You can change your project type at any time by selecting a file extension in the System Setting Tool.
+Pixel Vision 8 games are zip files with a custom extension. The extension simply tells PV8 how to load the file and unzip it. You can change your project type at any time by selecting a file extension in the Chip Editor Tool.
 
 ![image alt text](images/ProjectTypes_image_0.png)
 

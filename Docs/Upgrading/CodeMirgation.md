@@ -2,6 +2,14 @@
 
 From time to time, the underlying Pixel Vision API may change. This page documents those changes based on the version of the SDK. While we try not to introduce changes that break existing games or throw errors intentionally, it is best to check this page after a new release to understand how to migrate your code to a new version of the Game Creator.
 
+## Game Creator v0.7.6a API Changes 
+
+Pixel Vision Game Creator leverages version v1.7.6 of the open source Pixel Vision SDK. Here is a quick list of code APIs that have changed and require updating  in your game:
+
+* `DrawSprite` now requires a DrawMode (DrawMode.Sprite/DrawMode.SpriteAbove or DrawMode.SpriteBelow) instead of a bool for defining to render above or below the tilemap layer.
+
+* `DrawSprites` also requires DrawMode instead of a bool to render the sprites above or below the tilemap.
+
 ## Game Creator v0.7.0a API Changes 
 
 Pixel Vision Game Creator leverages version v1.4 of the open source Pixel Vision SDK. Here is a quick list of code APIs that have changed and require updating  in your game:

@@ -12,7 +12,7 @@ To create your `color.png` file by hand, simply create a single line of pixels o
 
 Any colors over the `supportedColors `value will be ignored. The order of the colors in the PNG will match how they are stored in memory. Once you know their ID, you can reference them as needed like setting the background color value.
 
-The Display Tool is designed to make it easier to work with a game’s colors:
+The Color Tool is designed to make it easier to work with a game’s colors:
 
 ![image alt text](images/ParsingSystemColors_image_2.png)
 
