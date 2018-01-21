@@ -1,4 +1,4 @@
-# Sprite Editor
+# Sprite Editor (Pro Only)
 
 The Sprite Editor Tool allows you to preview sprites in memory. While editing sprites have is not enabled, there is still much functionality that this tool can offer when creating games. The most important being to see all of the sprites that are imported into the game and verifying that they are displayed correctly. Let's take a look at the Sprite Editor Tool's default layout.
 

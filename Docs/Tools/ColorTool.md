@@ -1,4 +1,4 @@
-# Color Tool
+# Color Tool (Pro Only)
 
 The Display Tool manages system colors. You can use this tool to define the system wide color palette and also set up individual palettes for swapping at run-time.
 
