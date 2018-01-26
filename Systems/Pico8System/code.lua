@@ -13,6 +13,8 @@
 -- Loads in the pico-8 APIs
 LoadScript("pico-8-shim")
 
+-- TODO load a Pico8 Lua. Once loaded, Init, Update and Draw will call the p8 script's functions.
+
 -- This this is an empty game, we will the following text. We combined two sets of fonts into
 -- the default.font.png. Use uppercase for larger characters and lowercase for a smaller one.
 local message = "EMPTY GAME\n\nThis is an empty game template. Press Ctrl + 1 to open the editor or modify the files found in your workspace game folder.\n\nVisit 'bit.ly/PV8GitBook' for the docs on how to use PV8."
@@ -21,21 +23,29 @@ local message = "EMPTY GAME\n\nThis is an empty game template. Press Ctrl + 1 to
 -- use this method to configure background color, ScreenBufferChip and draw a text box.
 function Init()
 
-	-- Here we are manually changing the background color
-	BackgroundColor(8)
+	-- Test to see if a Pico8 _init function exists and call that.
+	if(_init ~= nil) then
+		_init()
 
-	local display = Display()
+		-- If no Pico8 Init exits, run the empty template code
+	else
 
-	-- We are going to render the message in a box as tiles. To do this, we need to wrap the
-	-- text, then split it into lines and draw each line.
-	local wrap = WordWrap(message:lower(), ((display.x / 8) * 2) - 2)
-	local lines = SplitLines(wrap)
-	local total = #lines
-	local startY = display.y - (total * 8)
+		-- Here we are manually changing the background color
+		BackgroundColor(8)
 
-	-- We want to render the text from the bottom of the screen so we offset it and loop backwards.
-	for i = total, 1, - 1 do
-		DrawText(lines[i], 4, startY + ((i - 1) * 8), DrawMode.TilemapCache, "default", 7, - 4)
+		local display = Display()
+
+		-- We are going to render the message in a box as tiles. To do this, we need to wrap the
+		-- text, then split it into lines and draw each line.
+		local wrap = WordWrap(message:lower(), ((display.x / 8) * 2) - 2)
+		local lines = SplitLines(wrap)
+		local total = #lines
+		local startY = display.y - (total * 8)
+
+		-- We want to render the text from the bottom of the screen so we offset it and loop backwards.
+		for i = total, 1, - 1 do
+			DrawText(lines[i], 4, startY + ((i - 1) * 8), DrawMode.TilemapCache, "default", 7, - 4)
+		end
 	end
 
 end
@@ -45,7 +55,10 @@ end
 -- milliseconds since the last frame.
 function Update(timeDelta)
 
-	-- TODO add your own update logic here
+	-- Test to see if a Pico8 _update function exists and call it on each update
+	if(_update ~= nil) then
+		_update()
+	end
 
 end
 
@@ -53,10 +66,13 @@ end
 -- all of our draw calls should go. We'll be using this to render sprites to the display.
 function Draw()
 
-	-- We can use the RedrawDisplay() method to clear the screen and redraw the tilemap in a
-	-- single call.
-	RedrawDisplay()
-
-	-- TODO add your own draw logic here.
+	-- Test to see if a Pico8 _draw function exits and call it on each draw
+	if(_draw ~= nil) then
+		_draw()
+	else
+		-- We can use the RedrawDisplay() method to clear the screen and redraw the tilemap in a
+		-- single call.
+		RedrawDisplay()
+	end
 
 end
