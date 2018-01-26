@@ -6,7 +6,7 @@ The Game Creator also supports for loading sprite fonts into memory. The charact
 
 These files are similar to the` sprites.png`. Each character can be 8 x 8 and goes into any of the `GameChip`'s free memory slots. This means that you should always allow extra space in your `SpriteChip` to store fonts. In future versions of the Game Creator, a special font tool will help make this shared storage situation clearer.
 
-Each character in the `.font.png` file should match up to their ASCII values. The parser starts at 30, which represents an empty space. Each character after that goes up in value. Here is a chart showing the breakdown of the default supported characters:
+Each character in the `.font.png` file should match up to their ASCII values. The parser starts at 32, which represents an empty space. Each character after that goes up in value. Here is a chart showing the breakdown of the default supported characters:
 
 <table>
   <tr>
@@ -459,4 +459,4 @@ While you can arrange your `.font.png` character sprites in any 8 x 8 grid-based
 
 While the default template only supports the standard English character set, special characters can also be added to the template; they will be parsed and assigned an ASCII ID exactly like the main set of characters.
 
-
+
