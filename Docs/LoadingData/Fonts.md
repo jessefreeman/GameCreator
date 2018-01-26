@@ -446,10 +446,10 @@ Each character in the `.font.png` file should match up to their ASCII values. Th
     <td>O</td>
     <td>Uppercase O</td>
     <td></td>
-    <td>80</td>
-    <td>P</td>
-    <td>Uppercase P</td>
-  </tr>
+    <td>&nbsp</td>
+    <td>&nbsp</td>
+    <td>&nbsp</td>
+</tr>
 </table>
 
 
