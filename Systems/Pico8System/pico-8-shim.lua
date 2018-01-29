@@ -12,12 +12,8 @@
 	Learn more about making Pixel Vision 8 games at https://www.gitbook.com/@pixelvision8
 ]]--
 
-
-
-
--- Need to loop through the tilemap and build a look up table for sprite flags
-
-
+-- Look for a lua file with the sprite flags
+LoadScript("sprite-flags")
 
 -- save a reference to the native lua print function
 _print = print
@@ -77,11 +73,6 @@ function foreach(a, f)
   for v in all(a) do
     f(v)
   end
-end
-
-function add(a, v)
-  if a == nil then return end
-  a[#a + 1] = v
 end
 
 function del(a, dv)
@@ -292,7 +283,37 @@ function cursor(x, y)
 end
 
 function fget(n, f)
-  -- Has not been implemented
+
+  -- If spriteFlags doesn't exist, return 0
+  if(spriteFlags == nil) then
+    return 0
+  end
+
+  local flag = spriteFlags[n]
+
+  if(flag == nil) then
+    return 0
+  end
+
+  if(f == nil) then
+    return flag
+  else
+    local bits = BitArray(flag)
+
+    flag = bits[f + 1]
+
+    if(flag == nil) then
+      return 0
+    else
+      if(flag == 0) then
+        return true
+      else
+        return false
+      end
+    end
+
+  end
+
 end
 
 function fillp(pat)
@@ -337,7 +358,7 @@ function sget(x, y)
 end
 
 function mget(x, y)
-  -- Has not been implemented
+  return Tile(x, y).spriteID
 end
 
 function mset(x, y, v)

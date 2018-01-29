@@ -16,7 +16,7 @@
   },
   "TilemapChip": {
     "columns": 128,
-    "rows": 128,
+    "rows": 64,
     "totalFlags": 16
   },
   "DisplayChip": {

@@ -21,15 +21,17 @@ function EditorUI:CreateButton(flag, rect, spriteName, toolTip, forceDraw)
 
   data.doubleClick = false
   data.doubleClickTime = 0
-  data.doubleClickDelay = .35
+  data.doubleClickDelay = .45
+  data.doubleClickActive = false
 
   -- Customize the default name by adding Button to it
   data.name = "Button" .. data.name
   data.onClick = function(tmpData)
 
-    self:ClickButton(tmpData, true, tmpData.doubleClickTime < tmpData.doubleClickDelay)
+    self:ClickButton(tmpData, true, tmpData.doubleClickActive and tmpData.doubleClickTime < tmpData.doubleClickDelay)
 
     tmpData.doubleClickTime = 0
+    tmpData.doubleClickActive = true
 
     -- self:ClickButton(tmpData)
   end
@@ -116,10 +118,13 @@ function EditorUI:UpdateButton(data, hitRect)
       -- If the button wasn't in focus before, reset the timer since it's about to get focus
       if(data.inFocus == false) then
         data.doubleClickTime = 0
+        data.doubleClickActive = false
       end
 
       data.doubleClickTime = data.doubleClickTime + self.timeDelta
-
+      if(data.doubleClickActive and data.doubleClickTime > data.doubleClickDelay) then
+        data.doubleClickActive = false
+      end
     end
 
     -- If we are in the collision area, set the focus
