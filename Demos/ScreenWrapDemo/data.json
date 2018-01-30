@@ -1,0 +1,56 @@
+{
+    "ColorChip":
+    {
+        "pages":1,
+        "colorsPerPage":64,
+        "supportedColors":16,
+        "backgroundColor":0,
+        "transparent":"#FF00FF"
+    },
+    
+    "SpriteChip":{
+        "maxSpriteCount":40,
+        "unique":true,
+        "spriteWidth":8,
+        "spriteHeight":8,
+        "pages":2,
+        "cps":4
+    },
+    "TilemapChip":
+    {
+        "columns":32,
+        "rows":30,
+        "totalFlags":16
+    },
+    "DisplayChip":
+    {
+        "width":160,
+        "height":144,
+        "overscanX":0,
+        "overscanY":0,
+        "layers":6,
+        
+    },
+    "GameChip":
+    {
+        "name":"ScreenWrapDemo",
+        "description":"",
+        "version":"0.7.8",
+        "ext":".pv8",
+        "lockSpecs":true,
+        "maxSize":128,
+        "saveSlots":8,
+        
+    },
+    "MusicChip":
+    {
+        "totalTracks":4,
+        "notesPerTrack":127,
+        "totalLoop":16
+    },
+    "SoundChip":
+    {
+        "totalChannels":4,
+        "totalSounds":16,
+    }
+}
