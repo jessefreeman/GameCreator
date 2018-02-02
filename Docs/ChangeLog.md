@@ -2,9 +2,39 @@
 
 The Game Creator is constantly being updated based on the new feature backlog, bugs that need fixing and optimizing the underlying code base. Because of this, the goal is to release new versions as often as possible. If you are new to the Game Creator or looking to understand what has changed since the last release, you can find all of the changes below, broken down by the version number.
 
-### V0.7.8 Alpha
+### V0.7.9 Alpha
 
-This is an untested build of the Game Creator allowing developers to test out early features going into v0.8.0a. Make sure to backup your workspace before using. For this update, you should create an entirely new Workspace folder. Find the default location and remove the old bios and core workspace, then start up v0.7.6 to let it recreate the workspace from scratch.
+This is an untested build of the Game Creator allowing developers to test out early features going into v0.8.0a. Make sure to backup your workspace before using. For this update, you should create an entirely new Workspace folder. Find the default location and remove the old bios and core workspace, then start up v0.7.9 to let it recreate the workspace from scratch.
+
+* Added support for exporting loops as wav files from the Music Editor. Loops are saved to the /Sandbox/Loops/ folder in your workspace.
+
+* Fixed issues with Sprite Builder crashing when generating sb-sprites.lua file.
+
+* Added support for changing sound effect wave type in the sound’s settings tab.
+
+* Fixed wrapping issues when sprites would shift one pixel up as the appeared on the left side of the screen.
+
+* Added a new experimental Canvas class to help with creating pixel data on the fly including drawing primitives: pen, lines, boxes and circles. Also supports fill.
+
+* Two new demos: Canvas demo to show off the new drawing API and a Screen Wrap Demo to show off how sprites wrap around the screen.
+
+* You can now delete files in the Workspace Explorer Game and Sandbox folder by selecting the file and pressing Delete on the keyboard.
+
+* Updated documentation covering all of the new APIs, Enums and Tools.
+
+* Fixed copy path button when modifying the Workspace path.
+
+* Music tool now saves music generator settings when exiting the tool. Settings will be cleared if you start editing a new project.
+
+* There were over [42 issues](https://github.com/PixelVision8/GameCreator/milestone/9?closed=1&page=1) resolved in this build. You can track all of the [open issues on the Github issue page](https://github.com/PixelVision8/GameCreator/issues) and file any bugs you see there as well.
+
+Known Issues:
+
+* Restoring files from the trash has been disabled.
+
+* You can now keep folders in your workspace instead of .pv8 zip files. This features is experimental and may not work as expected.
+
+### V0.7.8 Alpha
 
 * Rebuilt Workspace Explorer Tool and underlying file system from scratch. Now all of the features of the GameCreator are available from the Workspace including launching games, editing files and managing the trash.
 
@@ -25,18 +55,6 @@ This is an untested build of the Game Creator allowing developers to test out ea
 * Fixed Lua file collisions allowing you to override default Lua files in the project. If a similar named Lua file is in the game's project, it will be used instead of built-in system files.
 
 * Cleaned up the Lua bridges and refactored EditorBridge to be part of the RunnerService and GameEditor. These new APIs will be documented in a future build.
-
-Known Issues:
-
-* The new file system is untested and may not work as expected or crash the Game Creator. Please make sure to back up any projects while using this build and modifying the Workspace from inside of the Game Creator itself.
-
-* Restoring files from the trash has been disabled.
-
-* The music settings are not fully functional. They are currently not mapped to the correct values. While you can make some changes to the music generator, some settings may throw an error or have unexpected results.
-
-* Unable to edit the wave type for SFX settings. There is no UI for this, and it currently displays a slider which will throw an error if it is used. This will be addressed in a future build.
-
-* You can now keep folders in your workspace instead of .pv8 zip files. This features is experimental and may not work as expected.
 
 ### V0.7.7 Alpha
 
@@ -110,7 +128,7 @@ This version was not stable enough to be released.
 
 * Fixed issues that would crash the Game Creator when trying to escape out of the loader or when reloading a tool that threw an error.
 
-* Sound has now been fixed and will correctly load and set based on the bios value. 
+* Sound has now been fixed and will correctly load and set based on the bios value.
 
 * Mute has also been fixed to restore the correct sound volume even after restarting the Game Creator.
 
@@ -160,7 +178,7 @@ This version was not stable enough to be released.
 
 * New internal URI system for loading game. There are two root locations, System (built in) and Workspace (user defined) allowing more control over how and where games are loaded from.
 
-* New Load APIs exposed to the global runner. You can call LoadGame(), LoadTool() and EditGame() from global and pass in the Game Creator URI path. 
+* New Load APIs exposed to the global runner. You can call LoadGame(), LoadTool() and EditGame() from global and pass in the Game Creator URI path.
 
 * Workspace/Lib folder is now Workspace/Libs folder. The previous framework UI scripts have been moved into the Game Creator’s system folder and each component is now its own Lua file.
 
@@ -242,7 +260,7 @@ This version was not stable enough to be released.
 
 * Deprecating editorBridge:LoadLib() which will be removed in v0.7.0a. Use apiBridge:LoadLib() instead. Now any game can load an external library file from the Game folder or the Workspace’s Lib folder.
 
-* Updated the Setting Tool. It now disables the game name if none exists. Also the workspace path area is larger and there is now a dedicated volume/mute button. 
+* Updated the Setting Tool. It now disables the game name if none exists. Also the workspace path area is larger and there is now a dedicated volume/mute button.
 
 * Fix to the Tilemap Tool to display the correct scroll y value.
 
@@ -318,4 +336,4 @@ This version was not stable enough to be released.
 
 * No sound or music support in this build
 
-
+

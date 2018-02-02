@@ -48,10 +48,8 @@ While most of these settings are functional, there is still some work to be done
 
 The next area allows you to change the global values of the generator itself such as the speed in tempo, the density, funk, and layer which alters the number and types of note per track and finally the musical scale to use.
 
-	![image alt text](images/MusicTool_image_11.png)
+![image alt text](images/MusicTool_image_11.png)
 
 When you are done modifying the generator, hit the back button to return to the music tool. Changes you make to the music generator are not saved between sessions and will be lost when quitting the music tool. This will be addressed in future versions of the Game Creator.
 
 When you have built a collection of loops, you can use the `PlaySong()` method and supply an array of loop IDs to create a single song.
-
-
