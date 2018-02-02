@@ -151,7 +151,6 @@ end
 
 function EditorUI:SelectToggleButton(data, id, trigger)
   -- TODO need to make sure we handle multiple selections vs one at a time
-
   -- Get the new button to select
   local buttonData = data.buttons[id]
   --print("Select", id, #data.buttons)
