@@ -154,7 +154,7 @@ function Draw()
 			-- Change the stroke to a single pixel
 			canvas:SetStroke({0}, 1, 1)
 
-			canvas:DrawLine(startPos.x, startPos.y, mousePos.x, mousePos.y, 0)
+			canvas:DrawLine(startPos.x, startPos.y, mousePos.x, mousePos.y)
 			startPos = NewVector(mousePos.x, mousePos.y)
 
 		elseif(tool == "Eraser") then
@@ -162,7 +162,7 @@ function Draw()
 			-- Change the stroke to 4 x 4 pixel box
 			canvas:SetStroke({1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1}, 4, 4)
 
-			canvas:DrawLine(startPos.x, startPos.y, mousePos.x, mousePos.y, 1)
+			canvas:DrawLine(startPos.x, startPos.y, mousePos.x, mousePos.y)
 			startPos = NewVector(mousePos.x, mousePos.y)
 
 		elseif(tool == "Line") then
@@ -172,7 +172,7 @@ function Draw()
 			-- Change the stroke to a single pixel
 			canvas:SetStroke({0}, 1, 1)
 
-			canvas:DrawLine(startPos.x, startPos.y, mousePos.x, mousePos.y, 0, fill)
+			canvas:DrawLine(startPos.x, startPos.y, mousePos.x, mousePos.y, fill)
 
 		elseif(tool == "Square") then
 
@@ -181,7 +181,7 @@ function Draw()
 			-- Change the stroke to a single pixel
 			canvas:SetStroke({0}, 1, 1)
 
-			canvas:DrawSquare(startPos.x, startPos.y, mousePos.x, mousePos.y, 0, fill)
+			canvas:DrawSquare(startPos.x, startPos.y, mousePos.x, mousePos.y, fill)
 
 		elseif(tool == "Circle") then
 
@@ -190,7 +190,7 @@ function Draw()
 			-- Change the stroke to a single pixel
 			canvas:SetStroke({0}, 1, 1)
 
-			canvas:DrawCircle(startPos.x, startPos.y, mousePos.x, mousePos.y, 0, fill)
+			canvas:DrawCircle(startPos.x, startPos.y, mousePos.x, mousePos.y, fill)
 
 		end
 
