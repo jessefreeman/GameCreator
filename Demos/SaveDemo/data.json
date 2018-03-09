@@ -1,0 +1,51 @@
+{
+  "ColorChip": {
+    "pages": 1,
+    "colorsPerPage": 64,
+    "supportedColors": 16,
+    "backgroundColor": 0,
+    "transparent": "#FF00FF"
+  },
+
+  "SpriteChip": {
+    "maxSpriteCount": 64,
+    "unique": true,
+    "spriteWidth": 8,
+    "spriteHeight": 8,
+    "pages": 4,
+    "cps": 3,
+    "maxSpriteCount": 64
+  },
+  "TilemapChip": {
+    "columns": 256,
+    "rows": 256,
+    "totalFlags": 16
+  },
+  "DisplayChip": {
+    "width": 256,
+    "height": 240,
+    "overscanX": 0,
+    "overscanY": 0,
+    "layers": 6,
+
+  },
+  "GameChip": {
+    "name": "SaveDemo",
+    "description": "",
+    "version": "0.7.6",
+    "ext": ".pv8",
+    "lockSpecs": true,
+    "maxSize": 384,
+    "saveSlots": 8
+
+  },
+  "MusicChip": {
+    "totalTracks": 4,
+    "notesPerTrack": 127,
+    "totalLoop": 16
+  },
+  "SoundChip": {
+    "totalChannels": 5,
+    "totalSounds": 32,
+  }
+}
