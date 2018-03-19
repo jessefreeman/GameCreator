@@ -32,7 +32,7 @@ function Init()
 
   -- We want to render the text from the bottom of the screen so we offset it and loop backwards.
   for i = total, 1, - 1 do
-    DrawText(lines[i], 1, startY + (i - 1), DrawMode.Tile, "default")
+    DrawText(lines[i], 1, startY + (i - 1), DrawMode.Tile, "default", 63)
   end
 
 end

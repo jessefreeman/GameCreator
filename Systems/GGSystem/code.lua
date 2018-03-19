@@ -18,22 +18,22 @@ local message = "EMPTY GAME\n\nThis is an empty game template. Press Ctrl + 1 to
 -- use this method to configure background color, ScreenBufferChip and draw a text box.
 function Init()
 
-	-- Here we are manually changing the background color
-	BackgroundColor(44)
+  -- Here we are manually changing the background color
+  BackgroundColor(44)
 
-	local display = Display()
+  local display = Display()
 
-	-- We are going to render the message in a box as tiles. To do this, we need to wrap the
-	-- text, then split it into lines and draw each line.
-	local wrap = WordWrap(message, (display.x / 8) - 2)
-	local lines = SplitLines(wrap)
-	local total = #lines
-	local startY = (display.y / 8) - total
+  -- We are going to render the message in a box as tiles. To do this, we need to wrap the
+  -- text, then split it into lines and draw each line.
+  local wrap = WordWrap(message, (display.x / 8) - 2)
+  local lines = SplitLines(wrap)
+  local total = #lines
+  local startY = (display.y / 8) - total
 
-	-- We want to render the text from the bottom of the screen so we offset it and loop backwards.
-	for i = total, 1, - 1 do
-		DrawText(lines[i], 1, startY + (i - 1), DrawMode.Tile, "default")
-	end
+  -- We want to render the text from the bottom of the screen so we offset it and loop backwards.
+  for i = total, 1, - 1 do
+    DrawText(lines[i], 1, startY + (i - 1), DrawMode.Tile, "default", 100)
+  end
 
 end
 
@@ -42,7 +42,7 @@ end
 -- milliseconds since the last frame.
 function Update(timeDelta)
 
-	-- TODO add your own update logic here
+  -- TODO add your own update logic here
 
 end
 
@@ -50,10 +50,10 @@ end
 -- all of our draw calls should go. We'll be using this to render sprites to the display.
 function Draw()
 
-	-- We can use the RedrawDisplay() method to clear the screen and redraw the tilemap in a
-	-- single call.
-	RedrawDisplay()
+  -- We can use the RedrawDisplay() method to clear the screen and redraw the tilemap in a
+  -- single call.
+  RedrawDisplay()
 
-	-- TODO add your own draw logic here.
+  -- TODO add your own draw logic here.
 
 end
