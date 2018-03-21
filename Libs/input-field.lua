@@ -326,7 +326,13 @@ function EditorUI:ChangeInputField(data, text, trigger)
 
     -- TODO need to add logic for handling negative numbers
     -- update the text var with the new value
-    text = string.rpad(tostring(value), data.width, "0")
+    if(value < 0) then
+      -- negative numbers are not valid so just replace with -
+      text = string.rpad(tostring(""), data.width, "-")
+    else
+      text = string.rpad(tostring(value), data.width, "0")
+    end
+
   end
 
   -- Look for any custom validation

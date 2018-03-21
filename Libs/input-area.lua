@@ -635,7 +635,7 @@ function EditorUI:EditInputArea(data, value)
 
     -- turn off blink
     data.blink = false
-
+    data.blinkTime = 0
     --
     -- -- If there is new data, show the data
     -- if(data.editingText ~= "" and data.editingText ~= data.text) then
@@ -713,7 +713,7 @@ function EditorUI:DrawInputArea(data)
   end
 
   -- Display cursor only on blink
-  if(data.blink == true) then
+  if(data.blink == true and data.editing == true) then
 
     -- Make sure that the cursor is within the scrolled area
     if(data.cursor.c >= data.scrollLeft and data.cursor.c <= data.scrollRight and data.cursor.r >= data.scrollFirst and data.cursor.r <= data.scrollLast) then
@@ -721,6 +721,17 @@ function EditorUI:DrawInputArea(data)
       -- Calculate the correct x and y position of the cursor
       -- local tmpX =
       -- local tmpY =
+
+      -- data.cursorDrawArguments = {
+      --   data.blinkChar,
+      --   0,
+      --   0,
+      --   DrawMode.Sprite,
+      --   data.font,
+      --   data.colorOffset,
+      --   data.spacing
+      -- }
+      -- print("Draw Cursor")
 
       -- Draw the cursor
       --DrawText(data.blinkChar, tmpX, tmpY, DrawMode.Sprite, data.font, data.colorOffset, data.spacing)
