@@ -140,7 +140,7 @@ function EditorUI:RedrawPicker(data)
     data.overIndex = -1
   end
 
-  if(data.selectedDrawArgs ~= nil) then
+  if(data.selectedDrawArgs ~= nil and data.selected > - 1) then
 
     self:NewDraw("DrawSprites", data.selectedDrawArgs)
 

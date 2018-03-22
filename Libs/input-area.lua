@@ -299,7 +299,7 @@ function EditorUI:InputAreaOnInput(data, value)
 
       else
         -- If we can't capture this special key, send it to the insert char method
-        --self:InputAreaInsertChar(data, char)
+        self:InputAreaInsertChar(data, char)
       end
 
     elseif(ascii == data.keys.ReturnKey) then
