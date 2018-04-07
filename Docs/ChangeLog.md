@@ -2,9 +2,43 @@
 
 The Game Creator is constantly being updated based on the new feature backlog, bugs that need fixing and optimizing the underlying code base. Because of this, the goal is to release new versions as often as possible. If you are new to the Game Creator or looking to understand what has changed since the last release, you can find all of the changes below, broken down by the version number.
 
-### V0.7.9 Alpha
+### V0.8.0 Beta
+This is a stable build of the Game Creator marking the first beta release of Pixel Vision 8. Make sure to backup your workspace before using. For this update, you should create an entirely new Workspace folder. Find the default location and remove the old bios and core workspace, then start up v0.8.0 to let it recreate the workspace from scratch.
 
-This is an untested build of the Game Creator allowing developers to test out early features going into v0.8.0a. Make sure to backup your workspace before using. For this update, you should create an entirely new Workspace folder. Find the default location and remove the old bios and core workspace, then start up v0.7.9 to let it recreate the workspace from scratch.
+* Rebuilt import/export logic to better supporting single threaded parsing so the UI won’t lock up when performing a complex task.
+
+* Fixed issue where save data for tools required Game Creator to run as admin on Windows. Tool save data is now located in the Workspace/Tmp folder during a user’s session and deleted when the Game Creator is shut down.
+
+* Added an experimental Pico 8 importer. Supportings sprites, tilemap and copying over lua code. Will automatically create a Pico 8 template from a .p8 file in the game directory similar to how systems and art packs are handled.
+
+* Added new Arduboy system template.
+
+* Optimized GameChip API to better support new drawing API and to make all calls more consistent across the framework.
+Fixes to sound effect and music tools.
+
+* Support for exporting music files to .wav. Exporting a song will go to the Workspace/Sandbox/Loops folder.
+
+* Fixed bug with DrawSpriteBlock to support correct number of sprite columns.
+
+* Added support for switching between layers in Tilemap Editor tool.
+
+* Added new tile-color-offset.json file to change the color offset of tiles in the tilemap.
+
+* Save settings from Song Generator between screens. Leverages the new built in tool saving feature.
+
+* Fixed input fields that displayed -1.
+
+* Added support for customizing mask color. By default any color set to #FF00FF will be ignore by the importer.
+
+* There were over [91 issues](https://github.com/PixelVision8/GameCreator/milestone/4?closed=1) resolved in this build. You can track all of the [open issues on the Github issue page](https://github.com/PixelVision8/GameCreator/issues) and file any bugs you see there as well.
+
+Known Issues:
+
+Restoring files from the trash has been disabled.
+You can now keep folders in your workspace instead of .pv8 zip files. This features is experimental and may not work as expected.
+
+
+### V0.7.9 Alpha
 
 * Added support for exporting loops as wav files from the Music Editor. Loops are saved to the /Sandbox/Loops/ folder in your workspace.
 
@@ -28,11 +62,6 @@ This is an untested build of the Game Creator allowing developers to test out ea
 
 * There were over [42 issues](https://github.com/PixelVision8/GameCreator/milestone/9?closed=1&page=1) resolved in this build. You can track all of the [open issues on the Github issue page](https://github.com/PixelVision8/GameCreator/issues) and file any bugs you see there as well.
 
-Known Issues:
-
-* Restoring files from the trash has been disabled.
-
-* You can now keep folders in your workspace instead of .pv8 zip files. This features is experimental and may not work as expected.
 
 ### V0.7.8 Alpha
 
@@ -335,5 +364,3 @@ This version was not stable enough to be released.
 * Open workflow allowing external pixel and code editors to modify games
 
 * No sound or music support in this build
-
-
