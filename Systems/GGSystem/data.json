@@ -2,7 +2,7 @@
   "ColorChip": {
     "pages": 2,
     "colorsPerPage": 64,
-    "supportedColors": 16,
+    "maxColors": 128,
     "backgroundColor": 0,
     "transparent": "#FF00FF"
   },
